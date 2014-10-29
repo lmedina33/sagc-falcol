@@ -11,6 +11,10 @@ namespace models\Entity;
  *
  * @author Carlos
  */
+
+/**
+ * @Entity @Table(name="professor")
+ */
 class Professor extends Usuario{
     //put your code here
     

@@ -11,6 +11,10 @@ namespace models\Entity;
  *
  * @author Carlos
  */
+
+/**
+ * @Entity @Table(name="turma")
+ */
 class Turma extends Entidade{
         
     /**

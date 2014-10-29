@@ -11,6 +11,10 @@ namespace models\Entity;
  *
  * @author Carlos
  */
+
+/**
+ * @Entity @Table(name="auth_users")
+ */
 class Usuario extends Entidade{
     
     /**

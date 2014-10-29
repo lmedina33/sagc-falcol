@@ -11,6 +11,10 @@
  *
  * @author Carlos
  */
+
+/**
+ * @Entity @Table(name="disciplina")
+ */
 class Disciplina {
     //put your code here
 }
