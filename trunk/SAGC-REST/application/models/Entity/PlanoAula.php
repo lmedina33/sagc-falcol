@@ -11,6 +11,10 @@ namespace models\Entity;
  *
  * @author Carlos
  */
+
+/**
+ * @Entity @Table(name="planoAula")
+ */
 class PlanoAula extends Entidade{
     //put your code here
 }

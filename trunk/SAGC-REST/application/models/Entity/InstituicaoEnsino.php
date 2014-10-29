@@ -11,6 +11,10 @@ namespace models\Entity;
  *
  * @author Carlos
  */
+
+/**
+ * @Entity @Table(name="instituicaoEnsino")
+ */
 class InstituicaoEnsino extends Entidade {
     //put your code here
     protected $nome;

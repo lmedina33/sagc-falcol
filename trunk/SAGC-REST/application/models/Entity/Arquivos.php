@@ -11,6 +11,10 @@ namespace models\Entity;
  *
  * @author Carlos
  */
+
+/**
+ * @Entity @Table(name="arquivo")
+ */
 class Arquivos extends Entidade {
     /**
      * @Column(type="string")

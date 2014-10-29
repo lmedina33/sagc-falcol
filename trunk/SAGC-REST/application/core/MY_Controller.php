@@ -1,21 +1,52 @@
-<?php
+<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+use models\negocio\AnotacoesBLL;
+use models\negocio\FamiliaBLL;
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+class MY_Controller extends CI_Controller {
+    public $data = array();
+    public $usuarioLogado = null;    
 
-/**
- * Description of MY_Controller
- *
- * @author Carlos
- */
-class MY_Controller extends CI_Controller{
-    //put your code here
-    function __construct() {
-        parent::__construct();        
-        $this->load->library('doctrine');
+    /**
+     * Constructor
+     */
+    public function __construct(){
+        parent::__construct();
+
+        $this->checarAutenticacao();
+        
+        $this->data["menuAtivo"] = array();
+        
+        if($this->tank_auth->is_logged_in()){
+            $usuarioBLL = new \models\negocio\UsuarioBLL();
+            $notificacaoBLL = new \models\negocio\NotificacaoBLL();
+            $this->usuarioLogado = $usuarioBLL->buscarPorId($this->tank_auth->get_user_id());
+            $this->data["usuarioLogado"] = $this->usuarioLogado;            
+            
+        }
+    }
+
+    protected function checarAutenticacao(){
+        if (!$this->tank_auth->is_logged_in()) {
+            redirect('/auth/login/');
+            exit;
+        }
     }
     
+    protected function view($view, $vars = NULL, $return = FALSE){
+        if(is_null($vars)){
+            $vars = $this->data;
+        }
+        if(isset($_GET['navAsAjax'])){
+            $result = $this->load->view($view, $vars, true);
+        }else{
+            $vars['pageContent'] = $this->load->view($view, $vars, true);
+            $result = $this->load->view('layout/framework', $vars, true);
+        }
+        
+        if($return){
+            return $result;
+        }else{
+            print $result;
+        }
+    }
 }
