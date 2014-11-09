@@ -14,7 +14,7 @@
 | path to your installation.
 |
 */
-$config['base_url']	= '';
+$config['base_url']	= 'http://ec2-54-69-161-158.us-west-2.compute.amazonaws.com/rest';
 
 /*
 |--------------------------------------------------------------------------
@@ -224,7 +224,7 @@ $config['cache_path'] = '';
 | MUST set an encryption key.  See the user guide for info.
 |
 */
-$config['encryption_key'] = '';
+$config['encryption_key'] = '56fde3rg7yulv12z468m295nv84mdfj10gh4';
 
 /*
 |--------------------------------------------------------------------------

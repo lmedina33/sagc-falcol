@@ -35,7 +35,7 @@ class MY_Controller extends CI_Controller {
     protected function view($view, $vars = NULL, $return = FALSE){
         if(is_null($vars)){
             $vars = $this->data;
-        }
+        }        
         if(isset($_GET['navAsAjax'])){
             $result = $this->load->view($view, $vars, true);
         }else{
