@@ -1,57 +1,62 @@
 <?php
-
 use Doctrine\Common\ClassLoader,
-	Doctrine\ORM\Tools\Setup,
-	Doctrine\ORM\EntityManager;
+    Doctrine\ORM\Configuration,
+    Doctrine\ORM\EntityManager,
+    Doctrine\Common\Cache\ArrayCache,
+    Doctrine\DBAL\Logging\EchoSQLLogger;
 
-/**
- * Doctrine bootstrap library for CodeIgniter
- *
- * @author	Joseph Wynn <joseph@wildlyinaccurate.com>
- * @link	http://wildlyinaccurate.com/integrating-doctrine-2-with-codeigniter-2
- */
-class Doctrine
-{
+class Doctrine {
 
-	public $em;
+  public $em = null;
+  
+  public static $ems = null;
 
-	public function __construct()
-	{
-		require_once __DIR__ . '/Doctrine/ORM/Tools/Setup.php';
-		Setup::registerAutoloadDirectory(__DIR__);
+  public function __construct()
+  {
+    // load database configuration from CodeIgniter
+    require_once APPPATH.'config/database.php';
 
-		// Load the database configuration from CodeIgniter
-		require APPPATH . 'config/database.php';
+    // Set up class loading. You could use different autoloaders, provided by your favorite framework,
+    // if you want to.
+    require_once APPPATH.'libraries/Doctrine/Common/ClassLoader.php';
 
-		$connection_options = array(
-			'driver'		=> 'pdo_mysql',
-			'user'			=> $db['default']['username'],
-			'password'		=> $db['default']['password'],
-			'host'			=> $db['default']['hostname'],
-			'dbname'		=> $db['default']['database'],
-			'charset'		=> $db['default']['char_set'],
-			'driverOptions'	=> array(
-				'charset'	=> $db['default']['char_set'],
-			),
-		);
+    $doctrineClassLoader = new ClassLoader('Doctrine',  APPPATH.'libraries');
+    $doctrineClassLoader->register();
+    $entitiesClassLoader = new ClassLoader('models', rtrim(APPPATH, "/" ));
+    $entitiesClassLoader->register();
+    $proxiesClassLoader = new ClassLoader('Proxies', APPPATH.'models/proxies');
+    $proxiesClassLoader->register();
 
-		// With this configuration, your model files need to be in application/models/Entity
-		// e.g. Creating a new Entity\User loads the class from application/models/Entity/User.php
-		$models_namespace = 'Entity';
-		$models_path = APPPATH . 'models';
-		$proxies_dir = APPPATH . 'models/Proxies';
-		$metadata_paths = array(APPPATH . 'models');
+    // Set up caches
+    $config = new Configuration;
+    $cache = new ArrayCache;
+    $config->setMetadataCacheImpl($cache);
+    $driverImpl = $config->newDefaultAnnotationDriver(array(APPPATH.'models/entidades'));
+    $config->setMetadataDriverImpl($driverImpl);
+    $config->setQueryCacheImpl($cache);
 
-		// Set $dev_mode to TRUE to disable caching while you develop
-		$dev_mode = false;
+    // Proxy configuration
+    $config->setProxyDir(APPPATH.'/models/proxies');
+    $config->setProxyNamespace('Proxies');
 
-		// If you want to use a different metadata driver, change createAnnotationMetadataConfiguration
-		// to createXMLMetadataConfiguration or createYAMLMetadataConfiguration.
-		$config = Setup::createAnnotationMetadataConfiguration($metadata_paths, $dev_mode, $proxies_dir);
-		$this->em = EntityManager::create($connection_options, $config);
+    // Set up logger
+    //$logger = new EchoSQLLogger;
+    //$config->setSQLLogger($logger);
 
-		$loader = new ClassLoader($models_namespace, $models_path);
-		$loader->register();
-	}
+    $config->setAutoGenerateProxyClasses( TRUE );
 
+    // Database connection information
+    $connectionOptions = array(
+        'driver' =>   'pdo_mysql',
+        'user' =>     $db['default']['username'],
+        'password' => $db['default']['password'],
+        'host' =>     $db['default']['hostname'],
+        'dbname' =>   $db['default']['database'],
+        'charset' =>  $db['default']['char_set']
+    );
+
+    // Create EntityManager
+    $this->em = EntityManager::create($connectionOptions, $config);
+    Doctrine::$ems = $this->em;
+  }
 }

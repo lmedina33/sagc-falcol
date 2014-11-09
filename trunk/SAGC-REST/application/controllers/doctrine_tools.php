@@ -1,5 +1,6 @@
 <?php
 
+
 class Doctrine_tools extends CI_Controller {
 
     protected function checarAutenticacao() {
@@ -14,6 +15,7 @@ class Doctrine_tools extends CI_Controller {
 
         //Instantiate a Doctrine Entity Manager 
         $this->em = $this->doctrine->em;
+        $this->load->database();
     }
 
     function index() {
@@ -21,15 +23,13 @@ class Doctrine_tools extends CI_Controller {
 		<form action="" method="POST">
 		Inserir Dados<input type="checkbox" name="dados" value="1"><br /><br />
 		<input type="submit" name="action" value="Atualizar Banco"><br /><br />
-                </form>';
-        $telefones = array("(081)35231565");
-        print serialize($telefones);
+                </form>';        
 
         if ($this->input->post('action')) {
             try {
                 $tool = new \Doctrine\ORM\Tools\SchemaTool($this->em);
 
-                $classes = array(
+                $classes = array(        
                     $this->em->getClassMetadata('models\entidades\Endereco'),
                     $this->em->getClassMetadata('models\entidades\Cidade'),
                     $this->em->getClassMetadata('models\entidades\Estado'),
@@ -56,38 +56,36 @@ class Doctrine_tools extends CI_Controller {
 
     function InserirDadosIniciais() {
 
-//        $estado = new Estado();
-//        $estado->setNome("Pernanbuco");
-//        $estado->setUf("PE");
-//        $this->em->Persist($estado);        
-//        $cidade = new Cidade();
-//        $cidade->setNome("Vitória de Santo Antão");
-//        $cidade->setEstado($estado);
-//        $this->em->Persist($cidade);
-//        
-//       
-//        $end = new Endereco();
-//        $end->setLogradouro("Rua Jardim Betânia");
-//        $end->setNumero("75");
-//        $end->setBairro("Livramento");
-//        $end->setCidade($cidade);
-//        $this->em->Persist($end);
-//        $root = new Usuario();
-//        $root->setNome("Carlos Eduardo de Souza Lima");
-//        $root->setMaster(true);
-//        $root->setFuncao("Gerente");
-//        $root->setEscolaridade("Sup imcompleto");
-//        $root->setEmail("dolalima@gmail.com");
-//        $root->setCpf("070.058.184-74");
-//        $root->setRg("7.153.203");
-//        $root->setCarteiraTrabalho("26542315654");
-//        $root->setDataNascimento(new DateTime());
-//        $root->setLogin("dolalima");
-//        $root->setSenha("lima1807");
-//        $root->setEndereco($end);
-//        $this->em->Persist($root);    
-
-
+        $estado = new Estado();
+        $estado->setNome("Pernanbuco");
+        $estado->setUf("PE");
+        $this->em->Persist($estado);        
+        $cidade = new Cidade();
+        $cidade->setNome("Vitória de Santo Antão");
+        $cidade->setEstado($estado);
+        $this->em->Persist($cidade);
+        
+       
+        $end = new Endereco();
+        $end->setLogradouro("Rua Jardim Betânia");
+        $end->setNumero("75");
+        $end->setBairro("Livramento");
+        $end->setCidade($cidade);
+        $this->em->Persist($end);
+        $root = new Usuario();
+        $root->setNome("Carlos Eduardo de Souza Lima");
+        $root->setMaster(true);
+        $root->setFuncao("Gerente");
+        $root->setEscolaridade("Sup imcompleto");
+        $root->setEmail("dolalima@gmail.com");
+        $root->setCpf("070.058.184-74");
+        $root->setRg("7.153.203");
+        $root->setCarteiraTrabalho("26542315654");
+        $root->setDataNascimento(new DateTime());
+        $root->setLogin("dolalima");
+        $root->setSenha("lima1807");
+        $root->setEndereco($end);
+        $this->em->Persist($root);
 
         $this->em->Flush();
 

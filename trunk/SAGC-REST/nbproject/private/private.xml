@@ -3,22 +3,16 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Carlos/Documents/NetBeansProjects/SAGC-REST/application/models/Entity/Aluno.php</file>
-            <file>file:/C:/Users/Carlos/Documents/NetBeansProjects/SAGC-REST/application/models/Entity/InstituicaoEnsino.php</file>
-            <file>file:/C:/Users/Carlos/Documents/NetBeansProjects/SAGC-REST/application/models/Entity/PlanoAula.php</file>
-            <file>file:/C:/Users/Carlos/Documents/NetBeansProjects/SAGC-REST/application/models/Entity/Disciplina.php</file>
-            <file>file:/C:/Users/Carlos/Documents/NetBeansProjects/SAGC-REST/application/models/Entity/Agenda.php</file>
-            <file>file:/C:/Users/Carlos/Documents/NetBeansProjects/SAGC-REST/application/models/Entity/Turma.php</file>
-            <file>file:/C:/Users/Carlos/Documents/NetBeansProjects/SAGC-REST/application/models/Entity/Estado.php</file>
-            <file>file:/C:/Users/Carlos/Documents/NetBeansProjects/SAGC-REST/application/models/Entity/MediaType.php</file>
-            <file>file:/C:/Users/Carlos/Documents/NetBeansProjects/SAGC-REST/application/models/Entity/Cidade.php</file>
-            <file>file:/C:/Users/Carlos/Documents/NetBeansProjects/SAGC-REST/application/models/Entity/Entidade.php</file>
-            <file>file:/C:/Users/Carlos/Documents/NetBeansProjects/SAGC-REST/application/models/Entity/Evento.php</file>
-            <file>file:/C:/Users/Carlos/Documents/NetBeansProjects/SAGC-REST/application/models/Entity/Professor.php</file>
-            <file>file:/C:/Users/Carlos/Documents/NetBeansProjects/SAGC-REST/application/models/Entity/Endereco.php</file>
-            <file>file:/C:/Users/Carlos/Documents/NetBeansProjects/SAGC-REST/application/models/Entity/Arquivos.php</file>
-            <file>file:/C:/Users/Carlos/Documents/NetBeansProjects/SAGC-REST/application/models/Entity/Usuario.php</file>
-            <file>file:/C:/Users/Carlos/Documents/NetBeansProjects/SAGC-REST/application/models/Entity/Curso.php</file>
+            <file>file:/C:/Users/Dola/Desktop/SAGC/SAGC-REST/application/controllers/dashboard.php</file>
+            <file>file:/C:/Users/Dola/Desktop/SAGC/SAGC-REST/application/controllers/welcome.php</file>
+            <file>file:/C:/Users/Dola/Desktop/SAGC/SAGC-REST/application/controllers/auth.php</file>
+            <file>file:/C:/Users/Dola/Desktop/SAGC/SAGC-REST/application/views/layout/navigation.php</file>
+            <file>file:/C:/Users/Dola/Desktop/SAGC/SAGC-REST/application/core/MY_Controller.php</file>
+            <file>file:/C:/Users/Dola/Desktop/SAGC/SAGC-REST/application/models/Entity/Usuario.php</file>
+            <file>file:/C:/Users/Dola/Desktop/SAGC/SAGC-REST/application/views/layout/dashboard.php</file>
+            <file>file:/C:/Users/Dola/Desktop/SAGC/SAGC-REST/assets/js/app.js</file>
+            <file>file:/C:/Users/Dola/Desktop/SAGC/SAGC-REST/application/config/routes.php</file>
+            <file>file:/C:/Users/Dola/Desktop/SAGC/SAGC-REST/application/controllers/doctrine_tools.php</file>
         </group>
     </open-files>
 </project-private>
