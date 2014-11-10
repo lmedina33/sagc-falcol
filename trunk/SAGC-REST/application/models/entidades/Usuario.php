@@ -101,8 +101,14 @@ class Usuario extends Entidade{
         return $this->login;
     }
 
-    function getSenha() {
-        return $this->senha;
+    public function setSenha($senha) {
+        require_once(APPPATH . 'libraries/phpass-0.1/PasswordHash.php');
+
+        $this->ci = & get_instance();
+
+        $hasher = new \PasswordHash(
+                $this->ci->config->item('phpass_hash_strength', 'tank_auth'), $this->ci->config->item('phpass_hash_portable', 'tank_auth'));
+        $this->senha = $hasher->HashPassword($senha);
     }
 
     function getEmail() {
@@ -147,10 +153,6 @@ class Usuario extends Entidade{
 
     function setLogin($login) {
         $this->login = $login;
-    }
-
-    function setSenha($senha) {
-        $this->senha = $senha;
     }
 
     function setEmail($email) {
