@@ -1,6 +1,6 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
-use models\negocio\AnotacoesBLL;
-use models\negocio\FamiliaBLL;
+
+
 
 class MY_Controller extends CI_Controller {
     public $data = array();
@@ -17,8 +17,7 @@ class MY_Controller extends CI_Controller {
         $this->data["menuAtivo"] = array();
         
         if($this->tank_auth->is_logged_in()){
-            $usuarioBLL = new \models\negocio\UsuarioBLL();
-            $notificacaoBLL = new \models\negocio\NotificacaoBLL();
+            $usuarioBLL = new \models\negocio\UsuarioBLL();            
             $this->usuarioLogado = $usuarioBLL->buscarPorId($this->tank_auth->get_user_id());
             $this->data["usuarioLogado"] = $this->usuarioLogado;            
             
