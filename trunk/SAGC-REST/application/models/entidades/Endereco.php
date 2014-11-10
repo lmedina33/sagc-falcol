@@ -38,7 +38,7 @@ class Endereco extends Entidade{
     protected $bairro;
 
     /**
-     * @Column(type="string", length=9, nullable=false )
+     * @Column(type="string", length=9, nullable=true)
      */
     protected $cep;
 

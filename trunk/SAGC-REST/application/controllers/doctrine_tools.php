@@ -1,5 +1,9 @@
 <?php
 
+use models\entidades\Endereco;
+use models\entidades\Cidade;
+use models\entidades\Estado;
+use models\entidades\Usuario;
 
 class Doctrine_tools extends CI_Controller {
 
@@ -23,29 +27,32 @@ class Doctrine_tools extends CI_Controller {
 		<form action="" method="POST">
 		Inserir Dados<input type="checkbox" name="dados" value="1"><br /><br />
 		<input type="submit" name="action" value="Atualizar Banco"><br /><br />
-                </form>';        
+                </form>';
 
         if ($this->input->post('action')) {
             try {
-                $tool = new \Doctrine\ORM\Tools\SchemaTool($this->em);
-
-                $classes = array(        
-                    $this->em->getClassMetadata('models\entidades\Endereco'),
-                    $this->em->getClassMetadata('models\entidades\Cidade'),
-                    $this->em->getClassMetadata('models\entidades\Estado'),
-                    $this->em->getClassMetadata('models\entidades\PerfilAcesso'),
-                    $this->em->getClassMetadata('models\entidades\Usuario'),
-                );
-
-                $tool->updateSchema($classes);
-
-                //$this->runTankAuthSchema();
 
                 if (isset($_POST['dados'])) {
                     $this->InserirDadosIniciais();
-                }
+                } else {
+                    $tool = new \Doctrine\ORM\Tools\SchemaTool($this->em);
 
-                $this->runTankAuthSchema();
+                    $classes = array(
+                        $this->em->getClassMetadata('models\entidades\Endereco'),
+                        $this->em->getClassMetadata('models\entidades\Cidade'),
+                        $this->em->getClassMetadata('models\entidades\Estado'),
+                        $this->em->getClassMetadata('models\entidades\PerfilAcesso'),
+                        $this->em->getClassMetadata('models\entidades\Usuario'),
+                    );
+
+                    $tool->updateSchema($classes);
+
+                    $this->runTankAuthSchema();
+
+
+
+                    //$this->runTankAuthSchema();
+                }
 
                 echo "Pronto!";
             } catch (Exception $exception) {
@@ -59,13 +66,13 @@ class Doctrine_tools extends CI_Controller {
         $estado = new Estado();
         $estado->setNome("Pernanbuco");
         $estado->setUf("PE");
-        $this->em->Persist($estado);        
+        $this->em->Persist($estado);
         $cidade = new Cidade();
         $cidade->setNome("Vitória de Santo Antão");
         $cidade->setEstado($estado);
         $this->em->Persist($cidade);
-        
-       
+
+
         $end = new Endereco();
         $end->setLogradouro("Rua Jardim Betânia");
         $end->setNumero("75");
@@ -73,14 +80,9 @@ class Doctrine_tools extends CI_Controller {
         $end->setCidade($cidade);
         $this->em->Persist($end);
         $root = new Usuario();
-        $root->setNome("Carlos Eduardo de Souza Lima");
-        $root->setMaster(true);
-        $root->setFuncao("Gerente");
+        $root->setNome("Carlos Eduardo de Souza Lima");                
         $root->setEscolaridade("Sup imcompleto");
-        $root->setEmail("dolalima@gmail.com");
-        $root->setCpf("070.058.184-74");
-        $root->setRg("7.153.203");
-        $root->setCarteiraTrabalho("26542315654");
+        $root->setEmail("dolalima@gmail.com");                
         $root->setDataNascimento(new DateTime());
         $root->setLogin("dolalima");
         $root->setSenha("lima1807");
@@ -88,8 +90,6 @@ class Doctrine_tools extends CI_Controller {
         $this->em->Persist($root);
 
         $this->em->Flush();
-
-        $this->runTankAuthSchema();
     }
 
     function runTankAuthSchema() {
