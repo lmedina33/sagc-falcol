@@ -1,16 +1,11 @@
 <?php
 
-use models\entidades\Endereco;
-use models\entidades\Cidade;
-use models\entidades\Estado;
 use models\entidades\Usuario;
 
 class Doctrine_tools extends CI_Controller {
-
-    protected function checarAutenticacao() {
-        
-    }
-
+    
+    protected function checarAutenticacao(){}
+    
     //Doctrine EntityManager
     public $em;
 
@@ -19,7 +14,6 @@ class Doctrine_tools extends CI_Controller {
 
         //Instantiate a Doctrine Entity Manager 
         $this->em = $this->doctrine->em;
-        $this->load->database();
     }
 
     function index() {
@@ -28,30 +22,28 @@ class Doctrine_tools extends CI_Controller {
 		Inserir Dados<input type="checkbox" name="dados" value="1"><br /><br />
 		<input type="submit" name="action" value="Atualizar Banco"><br /><br />
                 </form>';
-
+        
         if ($this->input->post('action')) {
             try {
-
-                if (isset($_POST['dados'])) {
+                $tool = new \Doctrine\ORM\Tools\SchemaTool($this->em);
+                
+                $classes = array(
+                    $this->em->getClassMetadata('models\entidades\Endereco'),
+                    $this->em->getClassMetadata('models\entidades\Cidade'),
+                    $this->em->getClassMetadata('models\entidades\Estado'),                    
+                    $this->em->getClassMetadata('models\entidades\PerfilAcesso'),
+                    $this->em->getClassMetadata('models\entidades\Usuario'),
+                    $this->em->getClassMetadata('models\entidades\Estabelecimento'),
+                    $this->em->getClassMetadata('models\entidades\Anuncio'),
+                    $this->em->getClassMetadata('models\entidades\Log')
+                );
+                
+                $tool->updateSchema($classes);
+                
+                $this->runTankAuthSchema();
+               
+                if(isset($_POST['dados'])){
                     $this->InserirDadosIniciais();
-                } else {
-                    $tool = new \Doctrine\ORM\Tools\SchemaTool($this->em);
-
-                    $classes = array(
-                        $this->em->getClassMetadata('models\entidades\Endereco'),
-                        $this->em->getClassMetadata('models\entidades\Cidade'),
-                        $this->em->getClassMetadata('models\entidades\Estado'),
-                        $this->em->getClassMetadata('models\entidades\PerfilAcesso'),
-                        $this->em->getClassMetadata('models\entidades\Usuario'),
-                    );
-
-                    $tool->updateSchema($classes);
-
-                    $this->runTankAuthSchema();
-
-
-
-                    //$this->runTankAuthSchema();
                 }
 
                 echo "Pronto!";
@@ -61,38 +53,19 @@ class Doctrine_tools extends CI_Controller {
         }
     }
 
-    function InserirDadosIniciais() {
+    function InserirDadosIniciais()
+    {
+        $admin = new Usuario();
+        $admin->setEmail("lti@lti.net.br");
+        $admin->setLogin("admin");
+        $admin->setSenha("123456");
+        
+        $this->em->Persist($admin);
 
-        $estado = new Estado();
-        $estado->setNome("Pernanbuco");
-        $estado->setUf("PE");
-        $this->em->Persist($estado);
-        $cidade = new Cidade();
-        $cidade->setNome("Vitória de Santo Antão");
-        $cidade->setEstado($estado);
-        $this->em->Persist($cidade);
-
-
-        $end = new Endereco();
-        $end->setLogradouro("Rua Jardim Betânia");
-        $end->setNumero("75");
-        $end->setBairro("Livramento");
-        $end->setCidade($cidade);
-        $this->em->Persist($end);
-        $root = new Usuario();
-        $root->setNome("Carlos Eduardo de Souza Lima");                
-        $root->setEscolaridade("Sup imcompleto");
-        $root->setEmail("dolalima@gmail.com");                
-        $root->setDataNascimento(new DateTime());
-        $root->setLogin("dolalima");
-        $root->setSenha("lima1807");
-        $root->setEndereco($end);
-        $this->em->Persist($root);
-
-        $this->em->Flush();
+        $this->em->Flush();         
     }
-
-    function runTankAuthSchema() {
+    
+    function runTankAuthSchema(){
         $this->db->query("
             CREATE TABLE IF NOT EXISTS ci_sessions (
               session_id varchar(40) COLLATE utf8_bin NOT NULL DEFAULT '0',
@@ -131,7 +104,7 @@ class Doctrine_tools extends CI_Controller {
               PRIMARY KEY (id)
             ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
         ");
-
+        
         $this->db->query("
             ALTER TABLE auth_users
             ADD  activated TINYINT( 1 ) NOT NULL DEFAULT  '1',
@@ -146,6 +119,6 @@ class Doctrine_tools extends CI_Controller {
             ADD  created DATETIME NOT NULL DEFAULT  '0000-00-00 00:00:00',
             ADD  modified TIMESTAMP NOT NULL DEFAULT '0000-00-00 00:00:00';
         ");
-    }
-
+    }    
+    
 }

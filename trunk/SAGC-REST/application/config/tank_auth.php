@@ -7,8 +7,8 @@
 | These details are used in emails sent by authentication library.
 |--------------------------------------------------------------------------
 */
-$config['website_name'] = 'SGM';
-$config['webmaster_email'] = 'lti@lti.net.br';
+$config['website_name'] = 'AFC';
+$config['webmaster_email'] = 'afc@lti.com.br';
 
 /*
 |--------------------------------------------------------------------------
@@ -39,7 +39,7 @@ $config['phpass_hash_strength'] = 8;
 | 'password_max_length' = Max length of user's password.
 |--------------------------------------------------------------------------
 */
-$config['allow_registration'] = FALSE;
+$config['allow_registration'] = TRUE;
 $config['captcha_registration'] = FALSE;
 $config['email_activation'] = FALSE;
 $config['email_activation_expire'] = 60*60*24*2;
@@ -73,7 +73,7 @@ $config['login_by_email'] = TRUE;
 $config['login_record_ip'] = TRUE;
 $config['login_record_time'] = TRUE;
 $config['login_count_attempts'] = TRUE;
-$config['login_max_attempts'] = 5;
+$config['login_max_attempts'] = 10000;
 $config['login_attempt_expire'] = 60*60*1;
 
 /*

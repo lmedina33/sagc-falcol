@@ -73,7 +73,6 @@ class ResolveTargetEntityListener
         $newMapping = $this->resolveTargetEntities[$mapping['targetEntity']];
         $newMapping = array_replace_recursive($mapping, $newMapping);
         $newMapping['fieldName'] = $mapping['fieldName'];
-
         unset($classMetadata->associationMappings[$mapping['fieldName']]);
 
         switch ($mapping['type']) {

@@ -1,180 +1,177 @@
 <?php
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 namespace models\entidades;
-/**
- * Description of Pessoa
- *
- * @author Carlos
- */
 
 /**
  * @Entity @Table(name="auth_users")
- */
-class Usuario extends Entidade{
+ **/
+class Usuario extends Entidade {
     
     /**
-     * @Column(type="string", length=250, nullable=false)
+     * @Column(name="nome", type="string", length=50, nullable=false)
      */
     protected $nome;
-
-    /**
-     * @Column(type="string",length=250,nullable=true)
-     */
-    protected $foto;
-
+    
     /**
      * @Column(type="date", nullable=false)
      */
     protected $dataNascimento;
-
-    /**
-     * @Column(type="string",length=250,nullable=true)
-     */
-    protected $escolaridade;
-
-    /**
-     * @Column(type="string",nullable=true)
-     */
-    protected $telefones;
     
+    /**
+     * @Column(type="string",length=15,nullable=false)
+     */
+    protected $cpf;
+
+    /**
+     * @Column(type="string", nullable=false)
+     */
+    protected $telefone;
+    
+    /**
+     * @Column(type="string", nullable=false)
+     */
+    protected $celular;    
+       
     /**
      * @Column(name="username", type="string", length=50, nullable=false)
      */
     protected $login;
-
+    
     /**
      * @Column(name="password", type="string", length=255, nullable=false)
      */
     protected $senha;
-
+    
     /**
      * @Column(name="email", type="string", length=100, nullable=false)
-     */
+     */    
     protected $email;
-
-    /**
-     * @ManyToOne(targetEntity="Endereco")
-     */
-    protected $endereco;
-        
     /**
      * @ManyToOne(targetEntity="PerfilAcesso")
      */
     protected $perfilAcesso;
     
     /**
-     * @ManyToOne(targetEntity="InstituicaoEnsino", inversedBy="usuarios")      
+     * @OneToOne(targetEntity="Endereco")
      */
-    protected $instituicaoEnsino;
-
+    protected $endereco;
+    
     /**
-     * @Column(type="array")
+     * @OneToMany(targetEntity="Estabelecimento",mappedBy="usuario")
      */
-    protected $configuracoes = array();
+    protected $estabelecimentos;
+    
+
+    public function __construct() {
+        parent::__construct();
+        $this->estabelecimento = new \Doctrine\Common\Collections\ArrayCollection();
+    }
     
     function getNome() {
         return $this->nome;
     }
 
-    function getFoto() {
-        return $this->foto;
+    function setNome($nome) {
+        $this->nome = $nome;
+    }
+    
+    function getCpf() {
+        return $this->cpf;
     }
 
+    function setCpf($cpf) {
+        $this->cpf = $cpf;
+    }
+        
+    public function getLogin() {
+        return $this->login;
+    }
+
+    public function setLogin($login) {
+        $this->login = $login;
+    }
+    
     function getDataNascimento() {
         return $this->dataNascimento;
     }
 
-    function getEscolaridade() {
-        return $this->escolaridade;
+    function getTelefone() {
+        return $this->telefone;
     }
 
-    function getTelefones() {
-        return $this->telefones;
-    }
-
-    function getLogin() {
-        return $this->login;
-    }
-
-    public function setSenha($senha) {
-        require_once(APPPATH . 'libraries/phpass-0.1/PasswordHash.php');
-
-        $this->ci = & get_instance();
-
-        $hasher = new \PasswordHash(
-                $this->ci->config->item('phpass_hash_strength', 'tank_auth'), $this->ci->config->item('phpass_hash_portable', 'tank_auth'));
-        $this->senha = $hasher->HashPassword($senha);
-    }
-
-    function getEmail() {
-        return $this->email;
+    function getCelular() {
+        return $this->celular;
     }
 
     function getEndereco() {
         return $this->endereco;
     }
 
-    function getPerfilAcesso() {
-        return $this->perfilAcesso;
-    }
-
-    function getInstituicaoEnsino() {
-        return $this->instituicaoEnsino;
-    }
-
-    function getConfiguracoes() {
-        return $this->configuracoes;
-    }
-
-    function setNome($nome) {
-        $this->nome = $nome;
-    }
-
-    function setFoto($foto) {
-        $this->foto = $foto;
+    function getEstabelecimentos() {
+        return $this->estabelecimentos;
     }
 
     function setDataNascimento($dataNascimento) {
         $this->dataNascimento = $dataNascimento;
     }
 
-    function setEscolaridade($escolaridade) {
-        $this->escolaridade = $escolaridade;
+    function setTelefone($telefone) {
+        $this->telefone = $telefone;
     }
 
-    function setTelefones($telefones) {
-        $this->telefones = $telefones;
-    }
-
-    function setLogin($login) {
-        $this->login = $login;
-    }
-
-    function setEmail($email) {
-        $this->email = $email;
+    function setCelular($celular) {
+        $this->celular = $celular;
     }
 
     function setEndereco($endereco) {
         $this->endereco = $endereco;
     }
 
-    function setPerfilAcesso($perfilAcesso) {
-        $this->perfilAcesso = $perfilAcesso;
+    function setEstabelecimentos($estabelecimentos) {
+        $this->estabelecimentos = $estabelecimentos;
     }
-
-    function setInstituicaoEnsino($instituicaoEnsino) {
-        $this->instituicaoEnsino = $instituicaoEnsino;
-    }
-
-    function setConfiguracoes($configuracoes) {
-        $this->configuracoes = $configuracoes;
-    }
-
 
     
+    public function setSenha($senha) {
+        require_once(APPPATH.'libraries/phpass-0.1/PasswordHash.php');
+        
+        $this->ci =& get_instance();
+        
+        $hasher = new \PasswordHash(
+            $this->ci->config->item('phpass_hash_strength', 'tank_auth'),
+            $this->ci->config->item('phpass_hash_portable', 'tank_auth'));
+        $this->senha = $hasher->HashPassword($senha);
+    }
+    
+    public function getEmail() {
+        return $this->email;
+    }
+
+    public function setEmail($email) {
+        $this->email = $email;
+    }
+    
+    public function getPerfilAcesso() {
+        return $this->perfilAcesso;
+    }
+
+    public function setPerfilAcesso($perfilAcesso) {
+        $this->perfilAcesso = $perfilAcesso;
+    }
+    
+    public function temPermissao($funcao, $edicao = false){
+        
+        //return true; //TODO: remover 
+        return true;
+        if($edicao){ //Modificação
+            $permissoesModificacao = $this->getPerfilAcesso()->getPermissoesModificacao();            
+            return in_array($funcao, (is_null($permissoesModificacao)? array() : $permissoesModificacao));
+        }
+        else{ //Acesso
+            $permissoesAcesso = $this->getPerfilAcesso()->getPermissoesAcesso();      
+            return in_array($funcao, (is_null($permissoesAcesso)? array() : $permissoesAcesso));
+        }
+    }
 }
+
+?>

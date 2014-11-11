@@ -1,12 +1,10 @@
 <?php
 
 namespace models\entidades;
-use models\entidades\Entidade;
 
 /**
- * @Entity
- * @Table(name="Cidade")
- */
+ * @Entity @Table(name="Cidade")
+ **/
 class Cidade extends Entidade {
     /**
      * @Column(type="string", length=255, nullable=false)
@@ -19,8 +17,7 @@ class Cidade extends Entidade {
     /**
      * @OneToMany(targetEntity="Endereco", mappedBy="cidade")
      */
-    protected $enderecos;    
-    
+    protected $enderecos;
     
     public function getNome() {
         return $this->nome;
@@ -44,8 +41,7 @@ class Cidade extends Entidade {
 
     public function setEnderecos($enderecos) {
         $this->enderecos = $enderecos;
-    }   
-    
+    }
 }
 
 ?>

@@ -281,7 +281,7 @@ abstract class AbstractQuery
 
         $value = $values[$class->getSingleIdentifierFieldName()];
 
-        if (null === $value) {
+        if ( ! $value) {
             throw new \InvalidArgumentException(
                 "Binding entities to query parameters only allowed for entities that have an identifier."
             );
@@ -741,7 +741,7 @@ abstract class AbstractQuery
 
             return $stmt;
         }
-
+        
         $data = $this->_em->getHydrator($this->_hydrationMode)->hydrateAll(
             $stmt, $this->_resultSetMapping, $this->_hints
         );
