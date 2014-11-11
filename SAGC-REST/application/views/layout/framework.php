@@ -3,19 +3,18 @@
     <head>
         <? require APPPATH . "views/layout/head.php"; ?>
     </head>
-    <body class="fixed-header fixed-ribbon fixed-navigation smart-style-3">
-        <!-- POSSIBLE CLASSES: minified, fixed-ribbon, fixed-header, fixed-width
-                 You can also add different skin classes such as "smart-skin-1", "smart-skin-2" etc...-->
+    <body class="smart-style-2">
 
-        <!-- HEADER -->
         <header id="header">
             <div id="logo-group">
 
                 <!-- PLACE YOUR LOGO HERE -->
-                <span id="logo"> <img src="<?= base_url("assets/img/logo-pale.png"); ?>" alt="SmartAdmin"> </span>
+                <span id="logo"> <img src="<?=  site_url("")?>/assets/img/logo.png" alt="SmartAdmin"> </span>
                 <!-- END LOGO PLACEHOLDER -->
 
-                <span id="activity" class="activity-dropdown active"> <i class="fa fa-user"></i> <b class="badge bounceIn animated <?= ($notificacoesPendentes > 0) ? "bg-color-red" : ""; ?>"><?= $notificacoesPendentes; ?></b> </span>
+                <!-- Note: The activity badge color changes when clicked and resets the number to 0
+                         Suggestion: You may want to set a flag when this happens to tick off all checked messages / notifications -->
+                <span id="activity" class="activity-dropdown"> <i class="fa fa-user"></i> <b class="badge"> 21 </b> </span>
 
                 <!-- AJAX-DROPDOWN : control this dropdown height, look and feel from the LESS variable file -->
                 <div class="ajax-dropdown">
@@ -24,10 +23,13 @@
                     <div class="btn-group btn-group-justified" data-toggle="buttons">
                         <label class="btn btn-default">
                             <input type="radio" name="activity" id="ajax/notify/mail.html">
-                            Mensagens (0) </label>
+                            Msgs (14) </label>
                         <label class="btn btn-default">
-                            <input type="radio" name="activity" id="<?= site_url('notificacoes/listarAjax'); ?>">
-                            Notificações (<?= $notificacoesPendentes; ?>) </label>                        
+                            <input type="radio" name="activity" id="ajax/notify/notifications.html">
+                            notify (3) </label>
+                        <label class="btn btn-default">
+                            <input type="radio" name="activity" id="ajax/notify/tasks.html">
+                            Tasks (4) </label>
                     </div>
 
                     <!-- notification content -->
@@ -44,8 +46,8 @@
                     <!-- end notification content -->
 
                     <!-- footer: refresh area -->
-                    <span> Ultima atualização em: 12/12/2013 9:43AM
-                        <button type="button" data-loading-text="<i class='fa fa-refresh fa-spin'></i> Carregando..." class="btn btn-xs btn-default pull-right">
+                    <span> Last updated on: 12/12/2013 9:43AM
+                        <button type="button" data-loading-text="<i class='fa fa-refresh fa-spin'></i> Loading..." class="btn btn-xs btn-default pull-right">
                             <i class="fa fa-refresh"></i>
                         </button> </span>
                     <!-- end footer -->
@@ -54,51 +56,26 @@
                 <!-- END AJAX-DROPDOWN -->
             </div>
 
-            <!-- projects dropdown -->
-            <div id="project-context">
-                <?
-                $entidadePublica = new models\negocio\EntidadePublicaBLL();
-                $entidadeAtual = $entidadePublica->buscarPorId($this->usuarioLogado->getEntidadePublicaAtualId());
-                ?>
+            <!-- #PROJECTS: projects dropdown -->
+            <div class="project-context hidden-xs">
 
-                <span class="label">Visualização</span>
-                <span id="project-selector" class="popover-trigger-element dropdown-toggle" data-toggle="dropdown"><?= is_null($entidadeAtual)? '' : $entidadeAtual->getNome(); ?> <i class="fa fa-angle-down"></i></span>
+                <span class="label">Projects:</span>
+                <span class="project-selector dropdown-toggle" data-toggle="dropdown">Recent projects <i class="fa fa-angle-down"></i></span>
 
                 <!-- Suggestion: populate this list with fetch and push technique -->
                 <ul class="dropdown-menu">
-                    <?
-                    $secretariasUsuario = $this->usuarioLogado->getSecretarias();
-                    $unidadesUsuario = $this->usuarioLogado->getUnidades();
-                    foreach ($secretariasUsuario as $secretaria):
-                        ?>
-                        <li>
-                            <a href="<?= site_url(); ?>/usuarios/trocarentidadepublicaatual/<?= $secretaria->getId() ?>">Secretaria: <?= $secretaria->getNome() ?></a>
-                        </li>                         
-                        <?
-                    endforeach;
-                    foreach ($unidadesUsuario as $unidade):
-                        ?>
-                        <li>
-                            <a href="<?= site_url(); ?>/usuarios/trocarentidadepublicaatual/<?= $unidade->getId() ?>">Unidade: <?= $unidade->getNome() ?></a>
-                        </li>                        
-                        <?
-                    endforeach;
-                    ?>                
-
+                    <li>
+                        <a href="javascript:void(0);">Online e-merchant management system - attaching integration with the iOS</a>
+                    </li>
+                    <li>
+                        <a href="javascript:void(0);">Notes on pipeline upgradee</a>
+                    </li>
+                    <li>
+                        <a href="javascript:void(0);">Assesment Report for merchant account</a>
+                    </li>
                     <li class="divider"></li>
                     <li>
-                        <select name="visualizacao-selecao" class="select2" data-select-search="true">
-                            <? foreach ($secretariasUsuario as $secretaria): ?>
-                                <option value="0">Secretaria: <?= $secretaria->getNome() ?></option>
-                                <?
-                            endforeach;
-                            foreach ($unidadesUsuario as $unidade):
-                                ?>
-                                <option value="0">Unidade: <?= $unidade->getNome() ?></option>
-                                <?
-                            endforeach;
-                            ?>
-                        </select>
+                        <a href="javascript:void(0);"><i class="fa fa-power-off"></i> Clear</a>
                     </li>
                 </ul>
                 <!-- end dropdown-menu-->
@@ -106,18 +83,50 @@
             </div>
             <!-- end projects dropdown -->
 
+            <!-- #TOGGLE LAYOUT BUTTONS -->
             <!-- pulled right: nav area -->
             <div class="pull-right">
 
                 <!-- collapse menu button -->
                 <div id="hide-menu" class="btn-header pull-right">
-                    <span> <a href="javascript:void(0);" title="Collapse Menu"><i class="fa fa-reorder"></i></a> </span>
+                    <span> <a href="javascript:void(0);" data-action="toggleMenu" title="Collapse Menu"><i class="fa fa-reorder"></i></a> </span>
                 </div>
                 <!-- end collapse menu -->
 
+                <!-- #MOBILE -->
+                <!-- Top menu profile link : this shows only when top menu is active -->
+                <ul id="mobile-profile-img" class="header-dropdown-list hidden-xs padding-5">
+                    <li class="">
+                        <a href="#" class="dropdown-toggle no-margin userdropdown" data-toggle="dropdown"> 
+                            <img src="img/avatars/sunny.png" alt="John Doe" class="online" />  
+                        </a>
+                        <ul class="dropdown-menu pull-right">
+                            <li>
+                                <a href="javascript:void(0);" class="padding-10 padding-top-0 padding-bottom-0"><i class="fa fa-cog"></i> Setting</a>
+                            </li>
+                            <li class="divider"></li>
+                            <li>
+                                <a href="#ajax/profile.html" class="padding-10 padding-top-0 padding-bottom-0"> <i class="fa fa-user"></i> <u>P</u>rofile</a>
+                            </li>
+                            <li class="divider"></li>
+                            <li>
+                                <a href="javascript:void(0);" class="padding-10 padding-top-0 padding-bottom-0" data-action="toggleShortcut"><i class="fa fa-arrow-down"></i> <u>S</u>hortcut</a>
+                            </li>
+                            <li class="divider"></li>
+                            <li>
+                                <a href="javascript:void(0);" class="padding-10 padding-top-0 padding-bottom-0" data-action="launchFullscreen"><i class="fa fa-arrows-alt"></i> Full <u>S</u>creen</a>
+                            </li>
+                            <li class="divider"></li>
+                            <li>
+                                <a href="login.html" class="padding-10 padding-top-5 padding-bottom-5" data-action="userLogout"><i class="fa fa-sign-out fa-lg"></i> <strong><u>L</u>ogout</strong></a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+
                 <!-- logout button -->
                 <div id="logout" class="btn-header transparent pull-right">
-                    <span> <a href="<?= site_url("auth/logout") ?>" title="Logout" data-logout-msg="Você está prestes a realizar logout no sistema"><i class="fa fa-sign-out"></i></a> </span>
+                    <span> <a href="login.html" title="Sign Out" data-action="userLogout" data-logout-msg="You can improve your security further after logging out by closing this opened browser"><i class="fa fa-sign-out"></i></a> </span>
                 </div>
                 <!-- end logout button -->
 
@@ -127,9 +136,10 @@
                 </div>
                 <!-- end search mobile button -->
 
+                <!-- #SEARCH -->
                 <!-- input: search field -->
-                <form action="<?php echo site_url('familias') ?>" class="header-search pull-right" method="post">
-                    <input type="text" name="termo" placeholder="Nome, CPF ou NIS" id="search-fld">
+                <form action="#ajax/search.html" class="header-search pull-right">
+                    <input id="search-fld" type="text" name="param" placeholder="Find reports and more">
                     <button type="submit">
                         <i class="fa fa-search"></i>
                     </button>
@@ -139,9 +149,72 @@
 
                 <!-- fullscreen button -->
                 <div id="fullscreen" class="btn-header transparent pull-right">
-                    <span> <a href="javascript:void(0);" onclick="launchFullscreen(document.documentElement);" title="Full Screen"><i class="fa fa-arrows-alt"></i></a> </span>
+                    <span> <a href="javascript:void(0);" data-action="launchFullscreen" title="Full Screen"><i class="fa fa-arrows-alt"></i></a> </span>
                 </div>
                 <!-- end fullscreen button -->
+
+                <!-- #Voice Command: Start Speech -->
+                <!-- NOTE: Voice command button will only show in browsers that support it. Currently it is hidden under mobile browsers. 
+                                   You can take off the "hidden-sm" and "hidden-xs" class to display inside mobile browser-->
+                <div id="speech-btn" class="btn-header transparent pull-right hidden-sm hidden-xs">
+                    <div> 
+                        <a href="javascript:void(0)" title="Voice Command" data-action="voiceCommand"><i class="fa fa-microphone"></i></a> 
+                        <div class="popover bottom"><div class="arrow"></div>
+                            <div class="popover-content">
+                                <h4 class="vc-title">Voice command activated <br><small>Please speak clearly into the mic</small></h4>
+                                <h4 class="vc-title-error text-center">
+                                    <i class="fa fa-microphone-slash"></i> Voice command failed
+                                    <br><small class="txt-color-red">Must <strong>"Allow"</strong> Microphone</small>
+                                    <br><small class="txt-color-red">Must have <strong>Internet Connection</strong></small>
+                                </h4>
+                                <a href="javascript:void(0);" class="btn btn-success" onclick="commands.help()">See Commands</a> 
+                                <a href="javascript:void(0);" class="btn bg-color-purple txt-color-white" onclick="$('#speech-btn .popover').fadeOut(50);">Close Popup</a> 
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- end voice command -->
+
+                <!-- multiple lang dropdown : find all flags in the flags page -->
+                <ul class="header-dropdown-list hidden-xs">
+                    <li>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"> <img src="img/blank.gif" class="flag flag-us" alt="United States"> <span> US</span> <i class="fa fa-angle-down"></i> </a>
+                        <ul class="dropdown-menu pull-right">
+                            <li class="active">
+                                <a href="javascript:void(0);"><img src="img/blank.gif" class="flag flag-us" alt="United States"> English (US)</a>
+                            </li>
+                            <li>
+                                <a href="javascript:void(0);"><img src="img/blank.gif" class="flag flag-fr" alt="France"> Français</a>
+                            </li>
+                            <li>
+                                <a href="javascript:void(0);"><img src="img/blank.gif" class="flag flag-es" alt="Spanish"> Español</a>
+                            </li>
+                            <li>
+                                <a href="javascript:void(0);"><img src="img/blank.gif" class="flag flag-de" alt="German"> Deutsch</a>
+                            </li>
+                            <li>
+                                <a href="javascript:void(0);"><img src="img/blank.gif" class="flag flag-jp" alt="Japan"> 日本語</a>
+                            </li>
+                            <li>
+                                <a href="javascript:void(0);"><img src="img/blank.gif" class="flag flag-cn" alt="China"> 中文</a>
+                            </li>	
+                            <li>
+                                <a href="javascript:void(0);"><img src="img/blank.gif" class="flag flag-it" alt="Italy"> Italiano</a>
+                            </li>	
+                            <li>
+                                <a href="javascript:void(0);"><img src="img/blank.gif" class="flag flag-pt" alt="Portugal"> Portugal</a>
+                            </li>
+                            <li>
+                                <a href="javascript:void(0);"><img src="img/blank.gif" class="flag flag-ru" alt="Russia"> Русский язык</a>
+                            </li>
+                            <li>
+                                <a href="javascript:void(0);"><img src="img/blank.gif" class="flag flag-kr" alt="Korea"> 한국어</a>
+                            </li>						
+
+                        </ul>
+                    </li>
+                </ul>
+                <!-- end multiple lang -->
 
             </div>
             <!-- end pulled right: nav area -->
@@ -149,36 +222,97 @@
         </header>
         <!-- END HEADER -->
 
+        <!-- #NAVIGATION -->
         <!-- Left panel : Navigation area -->
-        <!-- Note: This width of the aside area can be adjusted through LESS variables -->
+        <!-- Note: This width of the aside area can be adjusted through LESS/SASS variables -->
         <aside id="left-panel">
 
             <!-- User info -->
             <div class="login-info">
-                <span> <!-- User image size is adjusted inside CSS, it should stay as it --> 
+                <span> <!-- User image size is adjusted inside CSS, it should stay as is --> 
 
-                    <a>
-                        <img src="<?= base_url("uploads/usuarios")."/".$this->usuarioLogado->getFoto(); ?>" alt="me" class="online" /> 
+                    <a href="javascript:void(0);" id="show-shortcut" data-action="toggleShortcut">
+                        <img src="img/avatars/sunny.png" alt="me" class="online" /> 
                         <span>
-                            <?= substr($this->usuarioLogado->getNome(), 0, strpos($this->usuarioLogado->getNome(), " ") ? strpos($this->usuarioLogado->getNome(), " ") : strlen($this->usuarioLogado->getNome())); ?>
+                            <?=$usuarioLogado->getNome();?>
                         </span>
+                        <i class="fa fa-angle-down"></i>
                     </a> 
 
                 </span>
             </div>
             <!-- end user info -->
 
-            <? require APPPATH . "views/layout/navigation.php"; ?>
+            <!-- NAVIGATION : This navigation is also responsive
 
-            <span class="minifyme"> <i class="fa fa-arrow-circle-left hit"></i> </span>
+            To make this navigation dynamic please make sure to link the node
+            (the reference to the nav > ul) after page load. Or the navigation
+            will not initialize.
+            -->
+            <nav>
+                <!-- 
+                NOTE: Notice the gaps after each icon usage <i></i>..
+                Please note that these links work a bit different than
+                traditional href="" links. See documentation for details.
+                -->
+
+                <ul>
+                    <li class="">
+                        <a href="ajax/dashboard.html" title="Dashboard"><i class="fa fa-lg fa-fw fa-home"></i> <span class="menu-item-parent">Dashboard</span></a>
+                    </li>                    
+                    <li>
+                        <a href="#"><i class="fa fa-lg fa-fw fa-building"></i> <span class="menu-item-parent">Administrativo</span></a>
+                        <ul>
+                            <li>
+                                <a href="usuarios"><i class="fa fa-user"></i>Usuários</a>
+                            </li>
+                            <li>
+                                <a href="perfisacesso"><i class="fa fa-key"></i>Perfil de Acesso</a>
+                            </li>                            
+                        </ul>
+                    </li> 
+                    <li>
+                        <a href="#"><i class="fa fa-lg fa-fw fa-briefcase"></i><span class="menu-item-parent">Gerenciamento</span></a>
+                        <ul>
+                            <li>
+                                <a href="es"><i class="fa fa-home"></i> Estabelecimentos</a>
+                            </li>
+                            <li>
+                                <a href=""><i class="fa fa-desktop"></i> Aparelhos</a>
+                            </li>
+                            <li>
+                                <a href=""><i class="fa fa-film"></i> Anúncio</a>
+                            </li>
+                            <li>
+                                <a href=""><i class="fa fa-list"></i> Playlists</a>
+                            </li>
+                            <li>
+                                <a href=""><i class="fa fa-bar-chart"></i> Estatística</a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </nav>
+
+
+            
+
+
+
+            <span class="minifyme" data-action="minifyMenu"> <i class="fa fa-arrow-circle-left hit"></i> </span>
 
         </aside>
+        <!-- END NAVIGATION -->
 
-        <!-- MAIN PANEL -->
+        <!-- #MAIN PANEL -->
         <div id="main" role="main">
 
             <!-- RIBBON -->
             <div id="ribbon">
+
+                <span class="ribbon-button-alignment"> 
+                    <span id="refresh" class="btn btn-ribbon" data-action="resetWidgets" data-title="refresh" rel="tooltip" data-placement="bottom" data-original-title="<i class='text-warning fa fa-warning'></i> Warning! This will reset all your widget settings." data-html="true" data-reset-msg="Would you like to RESET all your saved widgets and clear LocalStorage?"><i class="fa fa-refresh"></i></span> 
+                </span>
 
                 <!-- breadcrumb -->
                 <ol class="breadcrumb">
@@ -191,30 +325,86 @@
 
                 Example below:
 
-                <span class="ribbon-button-alignment pull-right">
-                <span id="search" class="btn btn-ribbon hidden-xs" data-title="search"><i class="fa-grid"></i> Change Grid</span>
-                <span id="add" class="btn btn-ribbon hidden-xs" data-title="add"><i class="fa-plus"></i> Add</span>
-                <span id="search" class="btn btn-ribbon" data-title="search"><i class="fa-search"></i> <span class="hidden-mobile">Search</span></span>
+                <span class="ribbon-button-alignment pull-right" style="margin-right:25px">
+                        <a href="#" id="search" class="btn btn-ribbon hidden-xs" data-title="search"><i class="fa fa-grid"></i> Change Grid</a>
+                        <span id="add" class="btn btn-ribbon hidden-xs" data-title="add"><i class="fa fa-plus"></i> Add</span>
+                        <button id="search" class="btn btn-ribbon" data-title="search"><i class="fa fa-search"></i> <span class="hidden-mobile">Search</span></button>
                 </span> -->
 
             </div>
             <!-- END RIBBON -->
 
-            <!-- MAIN CONTENT -->
-            <div id="content"><?php
-                if (isset($pageContent)) {
-                    print $pageContent;
-                }
-                ?></div>
-            <!-- END MAIN CONTENT -->
+            <!-- #MAIN CONTENT -->
+            <div id="content">
+
+            </div>
+
+            <!-- END #MAIN CONTENT -->
 
         </div>
-        <!-- END MAIN PANEL -->
-<?php /* TODO: remover
-        <!-- SHORTCUT AREA : With large tiles (activated via clicking user name tag)
-        Note: These tiles are completely responsive,
-        you can add as many as you like
-        -->
+        <!-- END #MAIN PANEL -->
+
+        <!-- #PAGE FOOTER -->
+        <div class="page-footer">
+            <div class="row">
+                <div class="col-xs-12 col-sm-6">
+                    <span class="txt-color-white">SmartAdmin 1.5 <span class="hidden-xs"> - Web Application Framework</span> © 2014-2015</span>
+                </div>
+
+                <div class="col-xs-6 col-sm-6 text-right hidden-xs">
+                    <div class="txt-color-white inline-block">
+                        <i class="txt-color-blueLight hidden-mobile">Last account activity <i class="fa fa-clock-o"></i> <strong>52 mins ago &nbsp;</strong> </i>
+                        <div class="btn-group dropup">
+                            <button class="btn btn-xs dropdown-toggle bg-color-blue txt-color-white" data-toggle="dropdown">
+                                <i class="fa fa-link"></i> <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu pull-right text-left">
+                                <li>
+                                    <div class="padding-5">
+                                        <p class="txt-color-darken font-sm no-margin">Download Progress</p>
+                                        <div class="progress progress-micro no-margin">
+                                            <div class="progress-bar progress-bar-success" style="width: 50%;"></div>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="divider"></li>
+                                <li>
+                                    <div class="padding-5">
+                                        <p class="txt-color-darken font-sm no-margin">Server Load</p>
+                                        <div class="progress progress-micro no-margin">
+                                            <div class="progress-bar progress-bar-success" style="width: 20%;"></div>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="divider"></li>
+                                <li >
+                                    <div class="padding-5">
+                                        <p class="txt-color-darken font-sm no-margin">Memory Load <span class="text-danger">*critical*</span></p>
+                                        <div class="progress progress-micro no-margin">
+                                            <div class="progress-bar progress-bar-danger" style="width: 70%;"></div>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="divider"></li>
+                                <li>
+                                    <div class="padding-5">
+                                        <button class="btn btn-block btn-default">refresh</button>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                        <!-- end btn-group-->
+                    </div>
+                    <!-- end div-->
+                </div>
+                <!-- end col -->
+            </div>
+            <!-- end row -->
+        </div>
+        <!-- END FOOTER -->
+
+        <!-- #SHORTCUT AREA : With large tiles (activated via clicking user name tag)
+                 Note: These tiles are completely responsive, you can add as many as you like -->
         <div id="shortcut">
             <ul>
                 <li>
@@ -238,18 +428,8 @@
             </ul>
         </div>
         <!-- END SHORTCUT AREA -->
-*/ ?>
-        <!--================================================== -->
 
         <? require APPPATH . "views/layout/foot.php"; ?>
 
-        
-        <div id="over-carregando" style="position: absolute; top: 0; left: 0; bottom: 0; right: 0; z-index: 999999; background-color: rgba(0,0,0,0.8); display: none;">
-            <div style="width: 64px; position: absolute; bottom: 50%; left: 50%; margin: -32px 0 0 -49px; text-align: center;">
-                <img src="<?= base_url('assets/img/carregando.gif') ?>" style="width: 64px;"/>
-                <img src="<?= base_url('assets/img/sgm.png') ?>" style="width: 64px; margin-top: 12px"/>
-            </div>
-        </div>
-    </body>  
-    
+    </body>
 </html>

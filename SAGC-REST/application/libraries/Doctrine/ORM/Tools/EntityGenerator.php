@@ -158,38 +158,6 @@ class EntityGenerator
     );
 
     /**
-     * @var array Hash-map to handle generator types string.
-     */
-    protected static $generatorStrategyMap = array(
-        ClassMetadataInfo::GENERATOR_TYPE_AUTO      => 'AUTO',
-        ClassMetadataInfo::GENERATOR_TYPE_SEQUENCE  => 'SEQUENCE',
-        ClassMetadataInfo::GENERATOR_TYPE_TABLE     => 'TABLE',
-        ClassMetadataInfo::GENERATOR_TYPE_IDENTITY  => 'IDENTITY',
-        ClassMetadataInfo::GENERATOR_TYPE_NONE      => 'NONE',
-        ClassMetadataInfo::GENERATOR_TYPE_UUID      => 'UUID',
-        ClassMetadataInfo::GENERATOR_TYPE_CUSTOM    => 'CUSTOM'
-    );
-
-    /**
-     * @var array Hash-map to handle the change tracking policy string.
-     */
-    protected static $changeTrackingPolicyMap = array(
-        ClassMetadataInfo::CHANGETRACKING_DEFERRED_IMPLICIT  => 'DEFERRED_IMPLICIT',
-        ClassMetadataInfo::CHANGETRACKING_DEFERRED_EXPLICIT  => 'DEFERRED_EXPLICIT',
-        ClassMetadataInfo::CHANGETRACKING_NOTIFY             => 'NOTIFY',
-    );
-
-    /**
-     * @var array Hash-map to handle the inheritance type string.
-     */
-    protected static $inheritanceTypeMap = array(
-        ClassMetadataInfo::INHERITANCE_TYPE_NONE            => 'NONE',
-        ClassMetadataInfo::INHERITANCE_TYPE_JOINED          => 'JOINED',
-        ClassMetadataInfo::INHERITANCE_TYPE_SINGLE_TABLE    => 'SINGLE_TABLE',
-        ClassMetadataInfo::INHERITANCE_TYPE_TABLE_PER_CLASS => 'TABLE_PER_CLASS',
-    );
-
-    /**
      * @var string
      */
     private static $classTemplate =
@@ -704,7 +672,7 @@ public function __construct()
     {
         $lines = array();
         $lines[] = '/**';
-        $lines[] = ' * ' . $this->getClassName($metadata);
+        $lines[] = ' * '.$metadata->name;
 
         if ($this->generateAnnotations) {
             $lines[] = ' *';
@@ -941,14 +909,9 @@ public function __construct()
         $var = sprintf('%sMethodTemplate', $type);
         $template = self::$$var;
 
-        $methodTypeHint = null;
         $types          = Type::getTypesMap();
         $variableType   = $typeHint ? $this->getType($typeHint) . ' ' : null;
-
-        if ($typeHint && ! isset($types[$typeHint])) {
-            $variableType   =  '\\' . ltrim($variableType, '\\');
-            $methodTypeHint =  '\\' . $typeHint . ' ';
-        }
+        $methodTypeHint = $typeHint && ! isset($types[$typeHint]) ? '\\' . $typeHint . ' ' : null;
 
         $replacements = array(
           '<description>'       => ucfirst($type) . ' ' . $fieldName,
@@ -1028,9 +991,9 @@ public function __construct()
         $lines[] = $this->spaces . '/**';
 
         if ($associationMapping['type'] & ClassMetadataInfo::TO_MANY) {
-            $lines[] = $this->spaces . ' * @var \Doctrine\Common\Collections\Collection';
+            $lines[] = $this->spaces . ' * @var \Doctrine\Common\Collections\ArrayCollection';
         } else {
-            $lines[] = $this->spaces . ' * @var \\' . ltrim($associationMapping['targetEntity'], '\\');
+            $lines[] = $this->spaces . ' * @var ' . $associationMapping['targetEntity'];
         }
 
         if ($this->generateAnnotations) {
@@ -1117,23 +1080,17 @@ public function __construct()
                 $lines[] = $this->spaces . ' * @' . $this->annotationsPrefix . 'JoinTable(' . implode(', ', $joinTable) . ',';
                 $lines[] = $this->spaces . ' *   joinColumns={';
 
-                $joinColumnsLines = array();
-
                 foreach ($associationMapping['joinTable']['joinColumns'] as $joinColumn) {
-                    $joinColumnsLines[] = $this->spaces . ' *     ' . $this->generateJoinColumnAnnotation($joinColumn);
+                    $lines[] = $this->spaces . ' *     ' . $this->generateJoinColumnAnnotation($joinColumn);
                 }
 
-                $lines[] = implode(",". PHP_EOL, $joinColumnsLines);
                 $lines[] = $this->spaces . ' *   },';
                 $lines[] = $this->spaces . ' *   inverseJoinColumns={';
 
-                $inverseJoinColumnsLines = array();
-
                 foreach ($associationMapping['joinTable']['inverseJoinColumns'] as $joinColumn) {
-                    $inverseJoinColumnsLines[] = $this->spaces . ' *     ' . $this->generateJoinColumnAnnotation($joinColumn);
+                    $lines[] = $this->spaces . ' *     ' . $this->generateJoinColumnAnnotation($joinColumn);
                 }
 
-                $lines[] = implode(",". PHP_EOL, $inverseJoinColumnsLines);
                 $lines[] = $this->spaces . ' *   }';
                 $lines[] = $this->spaces . ' * )';
             }
@@ -1159,7 +1116,7 @@ public function __construct()
     {
         $lines = array();
         $lines[] = $this->spaces . '/**';
-        $lines[] = $this->spaces . ' * @var ' . $this->getType($fieldMapping['type']);
+        $lines[] = $this->spaces . ' * @var ' . $this->getType($fieldMapping['type']) . ' $' . $fieldMapping['fieldName'];
 
         if ($this->generateAnnotations) {
             $lines[] = $this->spaces . ' *';
@@ -1246,45 +1203,63 @@ public function __construct()
         return implode("\n", $lines);
     }
 
-    /**
-     * @param integer $type                 The inheritance type used by the class and it's subclasses.
-     * @return string                       The literal string for the inheritance type.
-     * @throws \InvalidArgumentException    When the inheritance type does not exists.
-     */
-    protected function getInheritanceTypeString($type)
+    private function getInheritanceTypeString($type)
     {
-        if ( ! isset(self::$inheritanceTypeMap[$type])) {
-            throw new \InvalidArgumentException(sprintf('Invalid provided InheritanceType: %s', $type));
-        }
+        switch ($type) {
+            case ClassMetadataInfo::INHERITANCE_TYPE_NONE:
+                return 'NONE';
 
-        return self::$inheritanceTypeMap[$type];
+            case ClassMetadataInfo::INHERITANCE_TYPE_JOINED:
+                return 'JOINED';
+
+            case ClassMetadataInfo::INHERITANCE_TYPE_SINGLE_TABLE:
+                return 'SINGLE_TABLE';
+
+            case ClassMetadataInfo::INHERITANCE_TYPE_TABLE_PER_CLASS:
+                return 'PER_CLASS';
+
+            default:
+                throw new \InvalidArgumentException('Invalid provided InheritanceType: ' . $type);
+        }
     }
 
-    /**
-     * @param integer $type                 The policy used for change-tracking for the mapped class.
-     * @return string                       The literal string for the change-tracking type.
-     * @throws \InvalidArgumentException    When the change-tracking type does not exists.
-     */
-    protected function getChangeTrackingPolicyString($type)
+    private function getChangeTrackingPolicyString($policy)
     {
-        if ( ! isset(self::$changeTrackingPolicyMap[$type])) {
-            throw new \InvalidArgumentException(sprintf('Invalid provided ChangeTrackingPolicy: %s', $type));
-        }
+        switch ($policy) {
+            case ClassMetadataInfo::CHANGETRACKING_DEFERRED_IMPLICIT:
+                return 'DEFERRED_IMPLICIT';
 
-        return self::$changeTrackingPolicyMap[$type];
+            case ClassMetadataInfo::CHANGETRACKING_DEFERRED_EXPLICIT:
+                return 'DEFERRED_EXPLICIT';
+
+            case ClassMetadataInfo::CHANGETRACKING_NOTIFY:
+                return 'NOTIFY';
+
+            default:
+                throw new \InvalidArgumentException('Invalid provided ChangeTrackingPolicy: ' . $policy);
+        }
     }
 
-    /**
-     * @param integer $type                 The generator to use for the mapped class.
-     * @return string                       The literal string for the generetor type.
-     * @throws \InvalidArgumentException    When the generator type does not exists.
-     */
-    protected function getIdGeneratorTypeString($type)
+    private function getIdGeneratorTypeString($type)
     {
-        if ( ! isset(self::$generatorStrategyMap[$type])) {
-            throw new \InvalidArgumentException(sprintf('Invalid provided IdGeneratorType: %s', $type));
-        }
+        switch ($type) {
+            case ClassMetadataInfo::GENERATOR_TYPE_AUTO:
+                return 'AUTO';
 
-        return self::$generatorStrategyMap[$type];
+            case ClassMetadataInfo::GENERATOR_TYPE_SEQUENCE:
+                return 'SEQUENCE';
+
+            case ClassMetadataInfo::GENERATOR_TYPE_TABLE:
+                return 'TABLE';
+
+            case ClassMetadataInfo::GENERATOR_TYPE_IDENTITY:
+                return 'IDENTITY';
+
+            case ClassMetadataInfo::GENERATOR_TYPE_NONE:
+                return 'NONE';
+
+            default:
+                throw new \InvalidArgumentException('Invalid provided IdGeneratorType: ' . $type);
+        }
     }
 }

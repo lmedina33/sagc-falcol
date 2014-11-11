@@ -76,12 +76,10 @@ class XmlExporter extends AbstractExporter
         }
 
         if ($metadata->discriminatorColumn) {
-            $discriminatorColumnXml = $root->addChild('discriminator-column');
+            $discriminatorColumnXml = $root->addChild('discriminiator-column');
             $discriminatorColumnXml->addAttribute('name', $metadata->discriminatorColumn['name']);
             $discriminatorColumnXml->addAttribute('type', $metadata->discriminatorColumn['type']);
-            if (isset($metadata->discriminatorColumn['length'])) {
-                $discriminatorColumnXml->addAttribute('length', $metadata->discriminatorColumn['length']);
-            }
+            $discriminatorColumnXml->addAttribute('length', $metadata->discriminatorColumn['length']);
         }
 
         if ($metadata->discriminatorMap) {
@@ -111,9 +109,9 @@ class XmlExporter extends AbstractExporter
         if (isset($metadata->table['uniqueConstraints'])) {
             $uniqueConstraintsXml = $root->addChild('unique-constraints');
 
-            foreach ($metadata->table['uniqueConstraints'] as $name => $unique) {
+            foreach ($metadata->table['uniqueConstraints'] as $unique) {
                 $uniqueConstraintXml = $uniqueConstraintsXml->addChild('unique-constraint');
-                $uniqueConstraintXml->addAttribute('name', $name);
+                $uniqueConstraintXml->addAttribute('name', $unique['name']);
                 $uniqueConstraintXml->addAttribute('columns', implode(',', $unique['columns']));
             }
         }

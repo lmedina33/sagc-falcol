@@ -17,14 +17,17 @@ $confirm_new_password = array(
 	<head>
 		<? require APPPATH . "views/layout/head.php"; ?>
 	</head>
-	<body id="login" class="smart-style-3 animated fadeInDown">
+	<body id="login" class="animated fadeInDown">
 		<!-- possible classes: minified, no-right-panel, fixed-ribbon, fixed-header, fixed-width-->
 		<header id="header">
-                    <img class="logo-lti" src="<?=  base_url()?>assets/images/lti_logo.png"/>
-                    <img class="logo-sistema" src="<?=  base_url()?>assets/img/logo.png" />
-                    <h1 class="nome-sistema" >                        
-                        - Sistema de Gestão Municipal
-                    </h1>
+			<!--<span id="logo"></span>-->
+
+			<div id="logo-group">
+				<span id="logo"> <img src="<?= base_url("assets/img/logo.png"); ?>" alt="SmartAdmin"> </span>
+
+				<!-- END AJAX-DROPDOWN -->
+			</div>
+
 		</header>
 
 		<div id="main" role="main">
@@ -59,7 +62,7 @@ $confirm_new_password = array(
                                                     </fieldset><!-- /.login-fields -->
 
                                                     <footer>
-                                                        <?php echo form_submit('change', 'Trocar Senha', 'class="btn btn-primary"'); ?>
+                                                        <?php echo form_submit('change', 'Trocar Senha', 'class="button btn btn-large btn-primary btn-madmin"'); ?>
                                                     </footer><!-- /.login-actions -->
 
                                                     

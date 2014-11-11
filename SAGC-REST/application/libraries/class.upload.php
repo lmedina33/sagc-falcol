@@ -603,8 +603,8 @@
  * @package   cmf
  * @subpackage external
  */
- 
 class upload {
+
 
     /**
      * Class version

@@ -1,5 +1,17 @@
 <?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
+$config['site_email'] = 'afc@lti.com.br';
+
+/*
+|--------------------------------------------------------------------------
+| Site Name
+|--------------------------------------------------------------------------
+|
+| O nome em que o site/sistema � chamado
+|
+*/
+$config['site_name'] = 'AFC';
+
 /*
 |--------------------------------------------------------------------------
 | Base Site URL
@@ -14,7 +26,7 @@
 | path to your installation.
 |
 */
-$config['base_url']	= 'http://ec2-54-69-161-158.us-west-2.compute.amazonaws.com/rest';
+$config['base_url']	= 'http://localhost/tv';
 
 /*
 |--------------------------------------------------------------------------
@@ -26,7 +38,7 @@ $config['base_url']	= 'http://ec2-54-69-161-158.us-west-2.compute.amazonaws.com/
 | variable so that it is blank.
 |
 */
-$config['index_page'] = 'index.php';
+$config['index_page'] = '';
 
 /*
 |--------------------------------------------------------------------------
@@ -69,7 +81,7 @@ $config['url_suffix'] = '';
 | than english.
 |
 */
-$config['language']	= 'english';
+$config['language']	= 'portuguese';
 
 /*
 |--------------------------------------------------------------------------
@@ -356,7 +368,6 @@ $config['rewrite_short_tags'] = FALSE;
 |
 */
 $config['proxy_ips'] = '';
-
 
 /* End of file config.php */
 /* Location: ./application/config/config.php */

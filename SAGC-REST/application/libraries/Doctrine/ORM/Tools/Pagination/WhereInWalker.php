@@ -102,8 +102,11 @@ class WhereInWalker extends TreeWalkerAdapter
                 array($pathExpression)
             );
             $expression = new InExpression($arithmeticExpression);
-            $expression->literals[] = new InputParameter(":" . self::PAGINATOR_ID_ALIAS);
+            $ns = self::PAGINATOR_ID_ALIAS;
 
+            for ($i = 1; $i <= $count; $i++) {
+                $expression->literals[] = new InputParameter(":{$ns}_$i");
+            }
         } else {
             $expression = new NullComparisonExpression($pathExpression);
             $expression->not = false;

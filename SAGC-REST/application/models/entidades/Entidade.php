@@ -2,9 +2,10 @@
 
 namespace models\entidades;
 
-/** @MappedSuperclass */
+/** @MappedSuperclass
+ * @HasLifecycleCallbacks
+ */
 abstract class Entidade {
-
     /**
      * @Id @Column(type="integer")
      * @GeneratedValue(strategy="AUTO")
@@ -85,8 +86,6 @@ abstract class Entidade {
             $entityCount++;
         }
         
-        
-        
         $join_txt = implode(" ",$join);
         
         $query = $db->query("SELECT * FROM {$tableName} {$join_txt} WHERE {$tableName}.id = {$this->getId()}");
@@ -103,11 +102,7 @@ abstract class Entidade {
         
         $entidadeExported = var_export($entidadeArray, true);
         
-        
-        $usuarioBLL = new \models\negocio\UsuarioBLL();
-        $usuario = $usuarioBLL->buscarPorId(get_instance()->tank_auth->get_user_id());
-        
-        $db->query("INSERT INTO Log (prefeitura_id, usuario_id, ip, entidade, entidadeId, log, dataModificacao) VALUES (".$usuario->getPrefeitura()->getId().", ".$usuario->getId().", '".$_SERVER['REMOTE_ADDR']."', '".$className."', ".$this->getId().", '".addslashes($entidadeExported)."', NOW())");
+        $db->query("INSERT INTO Log (usuarioId, ip, entidade, entidadeId, log) VALUES (".get_instance()->tank_auth->get_user_id().", '".$_SERVER['REMOTE_ADDR']."', '".$className."', ".$this->getId().", '".addslashes($entidadeExported)."')");
     }
 }
 

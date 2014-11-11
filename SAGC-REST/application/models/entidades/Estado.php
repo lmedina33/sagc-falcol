@@ -3,9 +3,8 @@
 namespace models\entidades;
 
 /**
- * @Entity
- * @Table(name="Estado")
- */
+ * @Entity @Table(name="Estado")
+ **/
 class Estado extends Entidade {
     /**
      * @Column(type="string", length=255, nullable=false)
