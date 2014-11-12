@@ -3,7 +3,7 @@
     <head>
         <? require APPPATH . "views/layout/head.php"; ?>
     </head>
-    <body class="smart-style-2">
+    <body class="">
 
         <header id="header">
             <div id="logo-group">
@@ -272,24 +272,21 @@
                         </ul>
                     </li> 
                     <li>
-                        <a href="#"><i class="fa fa-lg fa-fw fa-briefcase"></i><span class="menu-item-parent">Gerenciamento</span></a>
+                        <a href="#"><i class="fa fa-lg fa-fw fa-book"></i><span class="menu-item-parent">Disciplinas</span></a>
                         <ul>
                             <li>
-                                <a href="es"><i class="fa fa-home"></i> Estabelecimentos</a>
+                                <a href=""><i class="fa fa-book"></i> Fisica</a>
                             </li>
                             <li>
-                                <a href=""><i class="fa fa-desktop"></i> Aparelhos</a>
+                                <a href=""><i class="fa fa-book"></i> Programação</a>
                             </li>
                             <li>
-                                <a href=""><i class="fa fa-film"></i> Anúncio</a>
-                            </li>
-                            <li>
-                                <a href=""><i class="fa fa-list"></i> Playlists</a>
-                            </li>
-                            <li>
-                                <a href=""><i class="fa fa-bar-chart"></i> Estatística</a>
-                            </li>
+                                <a href=""><i class="fa fa-book"></i> Teste de Software</a>
+                            </li>                            
                         </ul>
+                    </li>
+                    <li>
+                        <a href="#"><i class="fa fa-lg fa-fw fa-calendar"></i><span class="menu-item-parent">Atividades</span></a>                        
                     </li>
                 </ul>
             </nav>

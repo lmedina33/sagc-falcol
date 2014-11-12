@@ -18,17 +18,17 @@ class Usuario extends Entidade {
     protected $dataNascimento;
     
     /**
-     * @Column(type="string",length=15,nullable=false)
+     * @Column(type="string",length=15,nullable=true)
      */
     protected $cpf;
 
     /**
-     * @Column(type="string", nullable=false)
+     * @Column(type="string", nullable=true)
      */
     protected $telefone;
     
     /**
-     * @Column(type="string", nullable=false)
+     * @Column(type="string", nullable=true)
      */
     protected $celular;    
        
@@ -56,10 +56,6 @@ class Usuario extends Entidade {
      */
     protected $endereco;
     
-    /**
-     * @OneToMany(targetEntity="Estabelecimento",mappedBy="usuario")
-     */
-    protected $estabelecimentos;
     
 
     public function __construct() {
@@ -127,10 +123,7 @@ class Usuario extends Entidade {
         $this->endereco = $endereco;
     }
 
-    function setEstabelecimentos($estabelecimentos) {
-        $this->estabelecimentos = $estabelecimentos;
-    }
-
+    
     
     public function setSenha($senha) {
         require_once(APPPATH.'libraries/phpass-0.1/PasswordHash.php');

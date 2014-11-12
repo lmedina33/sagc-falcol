@@ -10,7 +10,7 @@ $config['site_email'] = 'afc@lti.com.br';
 | O nome em que o site/sistema � chamado
 |
 */
-$config['site_name'] = 'AFC';
+$config['site_name'] = 'SAGC - Sistema Acadêmico de Gerência de Contéudo';
 
 /*
 |--------------------------------------------------------------------------
@@ -26,7 +26,7 @@ $config['site_name'] = 'AFC';
 | path to your installation.
 |
 */
-$config['base_url']	= 'http://localhost/tv';
+$config['base_url']	= 'http://localhost/sagc';
 
 /*
 |--------------------------------------------------------------------------

@@ -2,20 +2,6 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group>
-            <file>file:/C:/Users/Carlos/Documents/NetBeansProjects/PublicidadeTv/application/controllers/framework.php</file>
-            <file>file:/C:/Users/Carlos/Documents/NetBeansProjects/PublicidadeTv/application/views/layout/framework.php</file>
-            <file>file:/C:/Users/Carlos/Documents/NetBeansProjects/PublicidadeTv/index.php</file>
-            <file>file:/C:/Users/Carlos/Documents/NetBeansProjects/PublicidadeTv/application/views/layout/head.php</file>
-            <file>file:/C:/Users/Carlos/Documents/NetBeansProjects/PublicidadeTv/application/controllers/auth.php</file>
-            <file>file:/C:/Users/Carlos/Documents/NetBeansProjects/PublicidadeTv/application/views/auth/login_form.php</file>
-            <file>file:/C:/Users/Carlos/Documents/NetBeansProjects/PublicidadeTv/application/config/routes.php</file>
-            <file>file:/C:/Users/Carlos/Documents/NetBeansProjects/PublicidadeTv/application/controllers/inicio.php</file>
-            <file>file:/C:/Users/Carlos/Documents/NetBeansProjects/PublicidadeTv/application/views/layout/foot.php</file>
-            <file>file:/C:/Users/Carlos/Documents/NetBeansProjects/PublicidadeTv/application/config/config.php</file>
-            <file>file:/C:/Users/Carlos/Documents/NetBeansProjects/PublicidadeTv/application/controllers/doctrine_tools.php</file>
-            <file>file:/C:/Users/Carlos/Documents/NetBeansProjects/PublicidadeTv/application/views/inicio/index.php</file>
-            <file>file:/C:/Users/Carlos/Documents/NetBeansProjects/PublicidadeTv/application/core/MY_Controller.php</file>
-        </group>
+        <group/>
     </open-files>
 </project-private>

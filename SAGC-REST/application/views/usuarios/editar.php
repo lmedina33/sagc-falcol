@@ -49,7 +49,7 @@ function pageHeader() { ?>
                     <div class="widget-body no-padding">
                         <form action="<?= site_url("usuarios/editar/" . $usuario->getId()); ?>" id="checkout-form" method="post" class="smart-form" novalidate="novalidate">
                             <fieldset>
-                                
+
                                 <div class="row">
                                     <section class="col col-xs-12 col-md-12 requerido">
                                         <label class="label">Nome</label>
@@ -100,7 +100,7 @@ function pageHeader() { ?>
                                 </div>
 
                                 <div class="row">                                    
-                                    
+
                                 </div>
                             </fieldset>
 
@@ -236,147 +236,161 @@ function pageHeader() { ?>
 </section>
 
 <script type="text/javascript">
-        pageSetUp();
-        
-    <? if (!$usuarioLogado->temPermissao('administracao/usuarios', true)) { ?>
-            desabilitarFormulario();
-    <? } ?>
-    
+    pageSetUp();
 
-        // Load form valisation dependency 
-        loadScript("<?= base_url(); ?>assets/js/plugin/jquery-form/jquery-form.min.js", runFormValidation);
+    $(document).ready(function () {
 
-        // Registration validation script
-        function runFormValidation() {
 
-            var $checkoutForm = $('#checkout-form').validate({
-                // Rules for form validation
-                rules: {
-                    nome: {
-                        required: true
-                    },
-                    dataNascimento: {
-                        required: true
-                    },
-                    escolaridadeId: {
-                        required: false
-                    },
-                    email: {
-                        required: true,
-                        email: true
-                    },
-                    telefone: {
-                        required: true
-                    },
-                    celular:{
-                        required:true
-                    },
-                    cpf: {
-                        required: true
-                    },
-                    logradouro: {
-                        required: true
-                    },
-                    numero: {
-                        required: true
-                    },
-                    bairro: {
-                        required: true
-                    },
-                    estadoId: {
-                        required: true
-                    },
-                    cidadeId: {
-                        required: true
-                    },
-                    cep: {
-                        required: false
-                    },
-                    login: {
-                        required: true
-                    },
-                    senha: {
-                        required: false,
-                        minlength: 4,
-                        maxlength: 30
-                    },
-                    senhaConfirmacao: {
-                        required: false,
-                        minlength: 4,
-                        maxlength: 30,
-                        equalTo: '#senha'
-                    }
+        $("select[name=estadoId]").change(function () {
+            $.get("<?= site_url("cidades/buscarPorEstadoJson") ?>/" + $(this).val(), function (cidades) {
+                $("select[name=cidadeId]").html("");
+                $("select[name=cidadeId]").append('<option value="" selected>Selecione a cidade</option>');
+                for (var i in cidades) {
+                    $("select[name=cidadeId]").append("<option value=\"" + cidades[i].id + "\">" + cidades[i].nome + "</option>");
+                }
+            }, "json");
+        });
+    });
 
+<? if (!$usuarioLogado->temPermissao('administracao/usuarios', true)) { ?>
+        desabilitarFormulario();
+<? } ?>
+
+
+    // Load form valisation dependency 
+    loadScript("<?= base_url(); ?>assets/js/plugin/jquery-form/jquery-form.min.js", runFormValidation);
+
+    // Registration validation script
+    function runFormValidation() {
+
+        var $checkoutForm = $('#checkout-form').validate({
+            // Rules for form validation
+            rules: {
+                nome: {
+                    required: true
                 },
-                // Messages for form validation
-                messages: {
-                    nome: {
-                        required: "Por favor, digite o nome"
-                    },
-                    dataNascimento: {
-                        required: "Por favor, digite a data de nascimento do Usuário"
-                    },
-                    escolaridadeId: {
-                        required: "Por favor, digite a escolaridade do Usuário"
-                    },
-                    email: {
-                        required: "Por favor, digite o e-mail do Usuário",
-                        email: "Por favor, digite um e-mail válido"
-                    },
-                    telefone: {
-                        required: "Por favor, digite o telefone do Usuário"
-                    },
-                    celular:{
-                        required: "Por favor, digite o celular do Usuário"
-                    },
-                    cpf: {
-                        required: "Por favor, digite o CPF do Usuário",
-                    },
-                    logradouro: {
-                        required: "Por favor, digite o logradouro em que o Usuário reside"
-                    },
-                    numero: {
-                        required: "Por favor, digite o número da residência em que o Usuário reside"
-                    },
-                    bairro: {
-                        required: "Por favor, digite o bairro em que o Usuário reside"
-                    },
-                    estadoId: {
-                        required: "Por favor, digite o estado em que o Usuário reside"
-                    },
-                    cidadeId: {
-                        required: "Por favor, digite a cidade em que o Usuário reside"
-                    },
-                    login: {
-                        required: "Por favor, digite o nome de Usuário"
-                    }
+                dataNascimento: {
+                    required: true
                 },
-                submitHandler: function (form) {
-                $.post($(form).attr('action'),$(form).serialize(),function(retorno){
-                    if(!retorno.erro){
-                        sucessDialogAlert("Usuário Atualizado","Informações atualizadas com sucesso.");
-                    }else{
-                        erroDialogAlert("Falha!","As informações não poderam ser atualizadas devidos há um erro.");
-                    }
-                },"json")
+                escolaridadeId: {
+                    required: false
+                },
+                email: {
+                    required: true,
+                    email: true
+                },
+                telefone: {
+                    required: true
+                },
+                celular: {
+                    required: true
+                },
+                cpf: {
+                    required: true
+                },
+                logradouro: {
+                    required: true
+                },
+                numero: {
+                    required: true
+                },
+                bairro: {
+                    required: true
+                },
+                estadoId: {
+                    required: true
+                },
+                cidadeId: {
+                    required: true
+                },
+                cep: {
+                    required: false
+                },
+                login: {
+                    required: true
+                },
+                senha: {
+                    required: false,
+                    minlength: 4,
+                    maxlength: 30
+                },
+                senhaConfirmacao: {
+                    required: false,
+                    minlength: 4,
+                    maxlength: 30,
+                    equalTo: '#senha'
+                }
+
             },
-                // Do not change code below
-                errorPlacement: function(error, element) {
-                    error.insertAfter(element.parent());
+            // Messages for form validation
+            messages: {
+                nome: {
+                    required: "Por favor, digite o nome"
+                },
+                dataNascimento: {
+                    required: "Por favor, digite a data de nascimento do Usuário"
+                },
+                escolaridadeId: {
+                    required: "Por favor, digite a escolaridade do Usuário"
+                },
+                email: {
+                    required: "Por favor, digite o e-mail do Usuário",
+                    email: "Por favor, digite um e-mail válido"
+                },
+                telefone: {
+                    required: "Por favor, digite o telefone do Usuário"
+                },
+                celular: {
+                    required: "Por favor, digite o celular do Usuário"
+                },
+                cpf: {
+                    required: "Por favor, digite o CPF do Usuário",
+                },
+                logradouro: {
+                    required: "Por favor, digite o logradouro em que o Usuário reside"
+                },
+                numero: {
+                    required: "Por favor, digite o número da residência em que o Usuário reside"
+                },
+                bairro: {
+                    required: "Por favor, digite o bairro em que o Usuário reside"
+                },
+                estadoId: {
+                    required: "Por favor, digite o estado em que o Usuário reside"
+                },
+                cidadeId: {
+                    required: "Por favor, digite a cidade em que o Usuário reside"
+                },
+                login: {
+                    required: "Por favor, digite o nome de Usuário"
                 }
-            });
-            // START AND FINISH DATE
-            $('#dataNasc').datepicker({
-                dateFormat: 'dd/mm/yy',
-                changeMonth: true,
-                changeYear: true,
-                minDate:"01/01/1900",
-                prevText: '<i class="fa fa-chevron-left"></i>',
-                nextText: '<i class="fa fa-chevron-right"></i>',
-                onSelect: function(selectedDate) {
-                    $('#finishdate').datepicker('option', 'minDate', selectedDate);
-                }
-            });            
-        }
+            },
+            submitHandler: function (form) {
+                $.post($(form).attr('action'), $(form).serialize(), function (retorno) {
+                    if (!retorno.erro) {
+                        sucessDialogAlert("Usuário Atualizado", "Informações atualizadas com sucesso.");
+                    } else {
+                        erroDialogAlert("Falha!", "As informações não poderam ser atualizadas devidos há um erro.");
+                    }
+                }, "json")
+            },
+            // Do not change code below
+            errorPlacement: function (error, element) {
+                error.insertAfter(element.parent());
+            }
+        });
+        // START AND FINISH DATE
+        $('#dataNasc').datepicker({
+            dateFormat: 'dd/mm/yy',
+            changeMonth: true,
+            changeYear: true,
+            minDate: "01/01/1900",
+            prevText: '<i class="fa fa-chevron-left"></i>',
+            nextText: '<i class="fa fa-chevron-right"></i>',
+            onSelect: function (selectedDate) {
+                $('#finishdate').datepicker('option', 'minDate', selectedDate);
+            }
+        });
+    }
 
-    </script>
+</script>
