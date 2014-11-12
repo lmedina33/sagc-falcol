@@ -33,8 +33,6 @@ class Doctrine_tools extends CI_Controller {
                     $this->em->getClassMetadata('models\entidades\Estado'),                    
                     $this->em->getClassMetadata('models\entidades\PerfilAcesso'),
                     $this->em->getClassMetadata('models\entidades\Usuario'),
-                    $this->em->getClassMetadata('models\entidades\Estabelecimento'),
-                    $this->em->getClassMetadata('models\entidades\Anuncio'),
                     $this->em->getClassMetadata('models\entidades\Log')
                 );
                 
@@ -56,6 +54,8 @@ class Doctrine_tools extends CI_Controller {
     function InserirDadosIniciais()
     {
         $admin = new Usuario();
+        $admin->setNome("Carlos Eduardo de Souza Lima");
+        $admin->setDataNascimento(dataStrToObject("24/03/1985"));
         $admin->setEmail("lti@lti.net.br");
         $admin->setLogin("admin");
         $admin->setSenha("123456");
