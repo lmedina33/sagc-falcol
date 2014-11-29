@@ -19,6 +19,12 @@ class Estado extends Entidade {
      */
     protected $cidades;
     
+    function __construct() {
+        parent::__construct();
+        $this->cidades = new \Doctrine\Common\Collections\ArrayCollection();        
+    }
+
+    
     public function getNome() {
         return $this->nome;
     }

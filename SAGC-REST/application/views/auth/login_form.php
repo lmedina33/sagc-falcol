@@ -32,20 +32,21 @@ $captcha = array(
 );
 ?>
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-br" style="height: 100%">
 	<head>
 		<? require APPPATH . "views/layout/head.php"; ?>
 	</head>
-	<body id="login" class="animated fadeInDown">
+	<body id="login" class="animated fadeInDown smart-style-2">
 		<!-- possible classes: minified, no-right-panel, fixed-ribbon, fixed-header, fixed-width-->
 		<header id="header">
 			<!--<span id="logo"></span>-->
 
 			<div id="logo-group">
-				<span id="logo"> <img src="<?= base_url("assets/img/logo.png"); ?>" alt="SmartAdmin"> </span>
-
-				<!-- END AJAX-DROPDOWN -->
-			</div>
+                <!-- PLACE YOUR LOGO HERE -->
+                <span id="logo" style="width: 30px"> <img style="width: 23px; height: 23px" src="<?= site_url("") ?>/assets/img/presence.png" alt="SmartAdmin"> </span>
+                <!-- END LOGO PLACEHOLDER -->
+                <span class="label" style="height: 10px; padding-top: 17px; font-size: 15px;padding-left: 0px;">Presence</span>
+            </div>
 
 		</header>
 

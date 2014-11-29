@@ -1,6 +1,6 @@
 <?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-$config['site_email'] = 'afc@lti.com.br';
+$config['site_email'] = 'lti@lti.com.br';
 
 /*
 |--------------------------------------------------------------------------
@@ -10,7 +10,7 @@ $config['site_email'] = 'afc@lti.com.br';
 | O nome em que o site/sistema � chamado
 |
 */
-$config['site_name'] = 'SAGC - Sistema Acadêmico de Gerência de Contéudo';
+$config['site_name'] = 'Presence';
 
 /*
 |--------------------------------------------------------------------------
@@ -26,7 +26,7 @@ $config['site_name'] = 'SAGC - Sistema Acadêmico de Gerência de Contéudo';
 | path to your installation.
 |
 */
-$config['base_url']	= 'http://localhost/sagc';
+$config['base_url']	= 'http://localhost/presence';
 
 /*
 |--------------------------------------------------------------------------

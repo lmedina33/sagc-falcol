@@ -18,17 +18,17 @@ class Usuario extends Entidade {
     protected $dataNascimento;
     
     /**
-     * @Column(type="string",length=15,nullable=true)
+     * @Column(type="string",length=15,nullable=false)
      */
     protected $cpf;
 
     /**
-     * @Column(type="string", nullable=true)
+     * @Column(type="string", nullable=false)
      */
     protected $telefone;
     
     /**
-     * @Column(type="string", nullable=true)
+     * @Column(type="string", nullable=false)
      */
     protected $celular;    
        
@@ -54,13 +54,12 @@ class Usuario extends Entidade {
     /**
      * @OneToOne(targetEntity="Endereco")
      */
-    protected $endereco;
+    protected $endereco;    
     
     
 
     public function __construct() {
-        parent::__construct();
-        $this->estabelecimento = new \Doctrine\Common\Collections\ArrayCollection();
+        parent::__construct();        
     }
     
     function getNome() {
@@ -123,7 +122,10 @@ class Usuario extends Entidade {
         $this->endereco = $endereco;
     }
 
-    
+    function setEstabelecimentos($estabelecimentos) {
+        $this->estabelecimentos = $estabelecimentos;
+    }
+
     
     public function setSenha($senha) {
         require_once(APPPATH.'libraries/phpass-0.1/PasswordHash.php');

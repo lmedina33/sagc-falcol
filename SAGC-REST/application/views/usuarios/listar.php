@@ -45,7 +45,8 @@
                         </div>
                         <table class="table table-hover">
                             <thead>
-                                <tr>                                    
+                                <tr> 
+                                    <th>#</th>                                    
                                     <th>Nome</th>
                                     <th>Email</th>                                    
                                     <th>Perfil de Acesso</th>
@@ -55,13 +56,13 @@
                             <tbody>
                                 <?php foreach ($usuarios as $usuario): ?>
                                     <tr>
-
+                                        <td><?=$usuario->getId();?></td>
                                         <td><?= $usuario->getNome(); ?></td>
                                         <td><?= $usuario->getEmail(); ?></td>                                        
                                         <td><?= is_null($usuario->getPerfilAcesso()) ? '' : $usuario->getPerfilAcesso()->getNome(); ?></td>
                                         <td>
                                             <div class="btn-group">
-                                                <a class="btn btn-xs btn-default" href="<?="#usuarios/editar/{$usuario->getId()}"?>">
+                                                <a class="btn btn-sm btn-default" href="<?="#usuarios/editar/{$usuario->getId()}"?>">
                                                     <?
                                                     if ($usuarioLogado->temPermissao('administracao/usuarios', true)) {
                                                         print '<i class="fa fa-pencil"></i> Editar';
@@ -71,7 +72,7 @@
                                                     ?>
                                                 </a>
                                                 <? if ($usuarioLogado->temPermissao('administracao/usuarios', true)) { ?>
-                                                    <a class="excluir btn btn-xs btn-danger" data-id="<?= $usuario->getId() ?>"><i class="fa fa-trash-o"></i> Excluir</a>
+                                                    <a class="excluir btn btn-sm btn-danger" data-id="<?= $usuario->getId() ?>"><i class="fa fa-trash-o"></i> Excluir</a>
                                                 <? } ?>
                                             </div>
                                         </td>

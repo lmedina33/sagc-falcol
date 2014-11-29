@@ -41,53 +41,6 @@ function arquivosNomesIguais($fileName, $index) {
     }
 }
 
-function dadosContrutivosETE() {
-    $dadosContrutivos = array("estacaoElevatoriaEfluentes" => array(), "tanqueEqualizacao" => array(),
-        "aeracao" => array(), "bombas" => array(),
-        "decantadorSecundario" => array());
-
-    $dadosContrutivos["estacaoElevatoriaEfluentes"]["ladoUtil"] = 3.6;
-    $dadosContrutivos["estacaoElevatoriaEfluentes"]["comprimentoUtil"] = 6;
-    $dadosContrutivos["estacaoElevatoriaEfluentes"]["alturaUtil"] = 3;
-    $dadosContrutivos["estacaoElevatoriaEfluentes"]["alturaTotal"] = 6.9;
-    $dadosContrutivos["estacaoElevatoriaEfluentes"]["volumeUtil"] = 64.8;
-
-    $dadosContrutivos["tanqueEqualizacao"]["larguraUtil"] = 7.65;
-    $dadosContrutivos["tanqueEqualizacao"]["comprimentoUtil"] = 15.3;
-    $dadosContrutivos["tanqueEqualizacao"]["alturaUtil"] = 5.7;
-    $dadosContrutivos["tanqueEqualizacao"]["alturaMorta"] = 0.3;
-    $dadosContrutivos["tanqueEqualizacao"]["bordaLivre"] = 0.5;
-    $dadosContrutivos["tanqueEqualizacao"]["alturaTotal"] = 6.5;
-    $dadosContrutivos["tanqueEqualizacao"]["volumeUtilEqualizacao"] = 667.16;
-    $dadosContrutivos["tanqueEqualizacao"]["volumeMorto"] = 35.11;
-    $dadosContrutivos["tanqueEqualizacao"]["volumeHomogeneizacao"] = 35.11;
-    $dadosContrutivos["tanqueEqualizacao"]["tempoResidencia"] = 11.12;
-
-    $dadosContrutivos["aeracao"]["larguraUtil"] = 13.85;
-    $dadosContrutivos["aeracao"]["comprimentoUtil"] = 27.7;
-    $dadosContrutivos["aeracao"]["alturaUtil"] = 6;
-    $dadosContrutivos["aeracao"]["bordaLivre"] = 0.5;
-    $dadosContrutivos["aeracao"]["alturaTotal"] = 6.5;
-    $dadosContrutivos["aeracao"]["volumeUtil"] = 2301.87;
-    $dadosContrutivos["aeracao"]["numeroCelulas"] = 2;
-    $dadosContrutivos["aeracao"]["volumeUtilTotal"] = 4603.74;
-    $dadosContrutivos["aeracao"]["volumeCelula"] = 2301.87;
-    $dadosContrutivos["aeracao"]["coeficienteGeracaoLodo"] = 0.65;
-
-    $dadosContrutivos["bombas"]["tipo"] = "Centrígura de rotor aberto";
-    $dadosContrutivos["bombas"]["identificacao"] = "BEL-001 A/B/C";
-    $dadosContrutivos["bombas"]["vazao"] = "155,52 m3/h";
-    $dadosContrutivos["bombas"]["alturaManometrica"] = "15 mca";
-    $dadosContrutivos["bombas"]["unidades"] = "3 Unidades";
-
-    $dadosContrutivos["decantadorSecundario"]["vazaoProjeto"] = 60;
-    $dadosContrutivos["decantadorSecundario"]["diametro"] = 9.5;
-    $dadosContrutivos["decantadorSecundario"]["alturaReta"] = 3;
-    $dadosContrutivos["decantadorSecundario"]["areaUtil"] = 70.88;
-    $dadosContrutivos["decantadorSecundario"]["volumeUtil"] = 212.65;
-
-    return $dadosContrutivos;
-}
 
 function sanitizeString($string) {
     // matriz de entrada
@@ -292,6 +245,24 @@ function dataStrObject($dataHora) {
             throw new Exception("A data \"$dataHora\" é inválida.");
         }
     }
+}
+
+
+
+function cnhCategorias(){
+    return array(
+        1=>"A",
+        2=>"B",
+        3=>"AB",
+        4=>"C",
+        5=>"AC",
+        6=>"D",
+        7=>"AD",
+        8=>"E",
+        9=>"AE"
+            
+            
+    );
 }
 
 ?>

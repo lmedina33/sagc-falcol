@@ -38,7 +38,7 @@
                     <td><?= $perfilacesso->getNome(); ?></td>
                     <td>
                         <div class="btn-group">
-                            <a class="btn btn-xs btn-default" href="<?= site_url("perfisacesso/editar/{$perfilacesso->getId()}") ?>">
+                            <a class="btn btn-xs btn-default" href="#perfisacesso/editar/<?= $perfilacesso->getId() ?>">
                                 <?
                                 if ($usuarioLogado->temPermissao('perfisacesso', true)) {
                                     print 'Editar';

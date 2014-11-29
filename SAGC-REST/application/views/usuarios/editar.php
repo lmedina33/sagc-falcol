@@ -238,23 +238,19 @@ function pageHeader() { ?>
 <script type="text/javascript">
     pageSetUp();
 
-    $(document).ready(function () {
-
-
-        $("select[name=estadoId]").change(function () {
-            $.get("<?= site_url("cidades/buscarPorEstadoJson") ?>/" + $(this).val(), function (cidades) {
-                $("select[name=cidadeId]").html("");
-                $("select[name=cidadeId]").append('<option value="" selected>Selecione a cidade</option>');
-                for (var i in cidades) {
-                    $("select[name=cidadeId]").append("<option value=\"" + cidades[i].id + "\">" + cidades[i].nome + "</option>");
-                }
-            }, "json");
-        });
-    });
-
 <? if (!$usuarioLogado->temPermissao('administracao/usuarios', true)) { ?>
         desabilitarFormulario();
 <? } ?>
+    
+    $("select[name=estadoId]").change(function () {
+        $.get("<?= site_url("cidades/buscarPorEstadoJson") ?>/" + $(this).val(), function (cidades) {
+            $("select[name=cidadeId]").html("");
+            $("select[name=cidadeId]").append('<option value="" selected>Selecione a cidade</option>');
+            for (var i in cidades) {
+                $("select[name=cidadeId]").append("<option value=\"" + cidades[i].id + "\">" + cidades[i].nome + "</option>");
+            }
+        }, "json");
+    });
 
 
     // Load form valisation dependency 
@@ -372,7 +368,7 @@ function pageHeader() { ?>
                     } else {
                         erroDialogAlert("Falha!", "As informações não poderam ser atualizadas devidos há um erro.");
                     }
-                }, "json")
+                }, "json");
             },
             // Do not change code below
             errorPlacement: function (error, element) {

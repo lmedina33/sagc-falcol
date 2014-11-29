@@ -66,13 +66,7 @@ class PerfisAcesso extends MY_Controller {
             $cadastro = $this->novoAction();
             $this->data["erro"] = $cadastro["erro"];
             $this->data["mensagem"] = $cadastro["mensagem"];
-            if (!$this->data["erro"]) {
-                unset($_POST);
-                redirect('perfisacesso?sucesso=true&mensagem=' . urlencode($this->data["mensagem"]));
-            } else {
-                $this->data["arvorePerfisAcesso"] = $this->arvorePerfisAcesso(explode(",", $_POST["permissoesAcesso"]));
-                $this->data["arvorePerfisModificacao"] = $this->arvorePerfisModificacao(explode(",", $_POST["permissoesModificacao"]));
-            }
+            die(json_encode($cadastro));
         } else {
             $this->data["arvorePerfisAcesso"] = $this->arvorePerfisAcesso();
             $this->data["arvorePerfisModificacao"] = $this->arvorePerfisModificacao();
@@ -122,9 +116,8 @@ class PerfisAcesso extends MY_Controller {
             $this->data["arvorePerfisAcesso"] = $this->arvorePerfisAcesso(explode(",", $_POST["permissoesAcesso"]));
             $this->data["arvorePerfisModificacao"] = $this->arvorePerfisModificacao(explode(",", $_POST["permissoesModificacao"]));
 
-            if (!$this->data["erro"]) {
-                unset($_POST);
-            }
+            
+            die(json_encode($cadastro));
         } else {
             $this->data["arvorePerfisAcesso"] = $this->arvorePerfisAcesso($this->data["perfilacesso"]->getPermissoesAcesso());
             $this->data["arvorePerfisModificacao"] = $this->arvorePerfisModificacao($this->data["perfilacesso"]->getPermissoesModificacao());
