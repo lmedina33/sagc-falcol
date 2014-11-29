@@ -15,7 +15,7 @@
                 <div class="jarviswidget">
                     <header>
                         <span class="widget-icon"><i class="fa fa-key"></i></span>
-                        <h2>Novo prefil de acesso</h2>
+                        <h2>Novo perfil de acesso</h2>
                     </header>
                     <div>
                         <div class="widget-body no-padding">
@@ -137,6 +137,17 @@ if (!$usuarioLogado->temPermissao('perfisacesso', true)) {
                 nome: {required: true}
             },
             messages: {
+                nome:{required:"Por favor, preencha o nome do perfil de acesso."}
+            },
+            submitHandler: function (form) {
+                $.post($(form).attr('action'), $(form).serialize(), function (retorno) {
+                    if (!retorno.erro) {
+                        sucessDialogAlert("Perfil Cadastrado", "Informações foram salvas com sucesso.");
+                        location.replace("#perfisacesso");
+                    } else {
+                        erroDialogAlert("Falha!", "As informações não poderam ser atualizadas devidos há um erro.<br>" + retorno.mensagem);
+                    }
+                }, "json");
             },
             errorPlacement: function (error, element) {
                 error.insertAfter(element.parent());

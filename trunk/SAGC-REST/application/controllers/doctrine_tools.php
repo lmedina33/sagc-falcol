@@ -1,6 +1,7 @@
 <?php
 
 use models\entidades\Usuario;
+use models\entidades\Endereco;
 
 class Doctrine_tools extends CI_Controller {
     
@@ -32,7 +33,12 @@ class Doctrine_tools extends CI_Controller {
                     $this->em->getClassMetadata('models\entidades\Cidade'),
                     $this->em->getClassMetadata('models\entidades\Estado'),                    
                     $this->em->getClassMetadata('models\entidades\PerfilAcesso'),
+                    $this->em->getClassMetadata('models\entidades\Pessoa'),
                     $this->em->getClassMetadata('models\entidades\Usuario'),
+                    $this->em->getClassMetadata('models\entidades\Turma'),
+                    $this->em->getClassMetadata('models\entidades\Aluno'),
+                    $this->em->getClassMetadata('models\entidades\Aula'),
+                    $this->em->getClassMetadata('models\entidades\Presenca'),
                     $this->em->getClassMetadata('models\entidades\Log')
                 );
                 
@@ -54,8 +60,11 @@ class Doctrine_tools extends CI_Controller {
     function InserirDadosIniciais()
     {
         $admin = new Usuario();
-        $admin->setNome("Carlos Eduardo de Souza Lima");
-        $admin->setDataNascimento(dataStrToObject("24/03/1985"));
+        $admin->setNome("Administrador");
+        $admin->setDataNascimento(dataStrToObject("01/01/2014"));
+        $admin->setTelefone("(81)8619-6629");
+        $admin->setCelular("(81)8619-6629");
+        $admin->setCpf("000.000.000-00");
         $admin->setEmail("lti@lti.net.br");
         $admin->setLogin("admin");
         $admin->setSenha("123456");

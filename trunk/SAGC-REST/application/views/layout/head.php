@@ -1,5 +1,5 @@
 <meta charset="utf-8">
-		<title> SmartAdmin (AJAX)</title>
+		<title> Presence</title>
 		<meta name="description" content="">
 		<meta name="author" content="">
 		
@@ -18,16 +18,16 @@
 		<!-- SmartAdmin RTL Support -->
 		<link rel="stylesheet" type="text/css" media="screen" href="<?=site_url("assets")?>/css/smartadmin-rtl.min.css"> 
 
-		<!-- We recommend you use "your_style.css" to override SmartAdmin
-		     specific styles this will also ensure you retrain your customization with each SmartAdmin update.
-		<link rel="stylesheet" type="text/css" media="screen" href="<?=site_url("assets")?>css/your_style.css"> -->
+		<!--We recommend you use "your_style.css" to override SmartAdmin
+		     specific styles this will also ensure you retrain your customization with each SmartAdmin update.-->
+		<link rel="stylesheet" type="text/css" media="screen" href="<?=site_url("assets")?>/css/your_style.css">
 
 		<!-- Demo purpose only: goes with demo.js, you can delete this css when designing your own WebApp -->
 		<link rel="stylesheet" type="text/css" media="screen" href="<?=site_url("assets")?>/css/demo.min.css">
 
 		<!-- #FAVICONS -->
-		<link rel="shortcut icon" href="<?=site_url("assets")?>/img/favicon/favicon.ico" type="image/x-icon">
-		<link rel="icon" href="<?=site_url("assets")?>/img/favicon/favicon.ico" type="image/x-icon">
+		<link rel="shortcut icon" href="<?=site_url("assets")?>/img/favicon/presence.ico" type="image/x-icon">
+		<link rel="icon" href="<?=site_url("assets")?>/img/favicon/presence.ico" type="image/x-icon">
 
 		<!-- #GOOGLE FONT -->
 		<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans:400italic,700italic,300,400,700">

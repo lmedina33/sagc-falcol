@@ -21,7 +21,7 @@
         <div class="row">
             <article class="col-xs-12 col-md-12 col-lg-8">
 
-                <form class="smart-form" id="checkout-form" action="<?= site_url("perfisacesso/editar/" . $perfilacesso->getId()) ?>" method="post">
+                <form class="smart-form" id="checkout-form" action="<?= base_url("perfisacesso/editar/" . $perfilacesso->getId()) ?>" method="post">
                     <input type="hidden" name="permissoesAcesso" id="permissoesAcesso" value="<?= isset($_POST["permissoesAcesso"]) ? $_POST["permissoesAcesso"] : implode(',', $perfilacesso->getPermissoesAcesso()) ?>"/>
                     <input type="hidden" name="permissoesModificacao" id="permissoesModificacao" value="<?= isset($_POST["permissoesModificacao"]) ? $_POST["permissoesModificacao"] : implode(',', $perfilacesso->getPermissoesModificacao()) ?>"/>
                     <fieldset>
@@ -63,6 +63,10 @@
 
 <link href="<?= base_url("assets/js/plugin/dynatree-1.2.4/src/skin/ui.dynatree.css"); ?>" rel="stylesheet" type="text/css" id="skinSheet">
 <script>
+    
+    loadScript("<?= base_url("assets/js/plugin/dynatree-1.2.4/jquery/jquery.cookie.js"); ?>");
+    loadScript("<?= base_url("assets/js/plugin/dynatree-1.2.4/src/jquery.dynatree.js"); ?>", fazerArvore);    
+    
     function fazerArvore() {
         $("#arvorePerfisAcesso").dynatree({
             checkbox: true,
@@ -125,13 +129,30 @@ if (!$usuarioLogado->temPermissao('perfisacesso', true)) {
 }
 ?>
     }
+    
+    loadScript("<?= base_url(); ?>assets/js/plugin/jquery-form/jquery-form.min.js", runFormValidation);
+    
     function runFormValidation() {
-        $('#checkout-form').validate({
+         var $checkoutForm = $('#checkout-form').validate({
             // Rules for form validation
             rules: {
-                nome: {required: true}
+                nome: {
+                    required: true
+                }
             },
             messages: {
+                nome:{
+                    required:"Por favor, preencha o nome do perfil de acesso."
+                }
+            },
+            submitHandler: function (form) {
+                $.post($(form).attr('action'), $(form).serialize(), function (retorno) {
+                    if (!retorno.erro) {
+                        sucessDialogAlert("Perfil Cadastrado", "Informações foram salvas com sucesso.");                        
+                    } else {
+                        erroDialogAlert("Falha!", "As informações não poderam ser atualizadas devidos há um erro.<br>" + retorno.mensagem);
+                    }
+                }, "json");
             },
             errorPlacement: function(error, element) {
                 error.insertAfter(element.parent());

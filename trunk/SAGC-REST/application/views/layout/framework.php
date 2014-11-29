@@ -3,85 +3,16 @@
     <head>
         <? require APPPATH . "views/layout/head.php"; ?>
     </head>
-    <body class="">
+    <body class="smart-style-2">
 
         <header id="header">
             <div id="logo-group">
-
                 <!-- PLACE YOUR LOGO HERE -->
-                <span id="logo"> <img src="<?=  site_url("")?>/assets/img/logo.png" alt="SmartAdmin"> </span>
+                <span id="logo" style="width: 30px"> <img style="width: 23px; height: 23px" src="<?=  site_url("")?>/assets/img/presence.png" alt="SmartAdmin"> </span>
                 <!-- END LOGO PLACEHOLDER -->
-
-                <!-- Note: The activity badge color changes when clicked and resets the number to 0
-                         Suggestion: You may want to set a flag when this happens to tick off all checked messages / notifications -->
-                <span id="activity" class="activity-dropdown"> <i class="fa fa-user"></i> <b class="badge"> 21 </b> </span>
-
-                <!-- AJAX-DROPDOWN : control this dropdown height, look and feel from the LESS variable file -->
-                <div class="ajax-dropdown">
-
-                    <!-- the ID links are fetched via AJAX to the ajax container "ajax-notifications" -->
-                    <div class="btn-group btn-group-justified" data-toggle="buttons">
-                        <label class="btn btn-default">
-                            <input type="radio" name="activity" id="ajax/notify/mail.html">
-                            Msgs (14) </label>
-                        <label class="btn btn-default">
-                            <input type="radio" name="activity" id="ajax/notify/notifications.html">
-                            notify (3) </label>
-                        <label class="btn btn-default">
-                            <input type="radio" name="activity" id="ajax/notify/tasks.html">
-                            Tasks (4) </label>
-                    </div>
-
-                    <!-- notification content -->
-                    <div class="ajax-notifications custom-scroll">
-
-                        <div class="alert alert-transparent">
-                            <h4>Click a button to show messages here</h4>
-                            This blank page message helps protect your privacy, or you can show the first message here automatically.
-                        </div>
-
-                        <i class="fa fa-lock fa-4x fa-border"></i>
-
-                    </div>
-                    <!-- end notification content -->
-
-                    <!-- footer: refresh area -->
-                    <span> Last updated on: 12/12/2013 9:43AM
-                        <button type="button" data-loading-text="<i class='fa fa-refresh fa-spin'></i> Loading..." class="btn btn-xs btn-default pull-right">
-                            <i class="fa fa-refresh"></i>
-                        </button> </span>
-                    <!-- end footer -->
-
-                </div>
-                <!-- END AJAX-DROPDOWN -->
+                <span class="label" style="height: 10px; padding-top: 17px; font-size: 15px;padding-left: 0px;">Presence</span>
             </div>
-
-            <!-- #PROJECTS: projects dropdown -->
-            <div class="project-context hidden-xs">
-
-                <span class="label">Projects:</span>
-                <span class="project-selector dropdown-toggle" data-toggle="dropdown">Recent projects <i class="fa fa-angle-down"></i></span>
-
-                <!-- Suggestion: populate this list with fetch and push technique -->
-                <ul class="dropdown-menu">
-                    <li>
-                        <a href="javascript:void(0);">Online e-merchant management system - attaching integration with the iOS</a>
-                    </li>
-                    <li>
-                        <a href="javascript:void(0);">Notes on pipeline upgradee</a>
-                    </li>
-                    <li>
-                        <a href="javascript:void(0);">Assesment Report for merchant account</a>
-                    </li>
-                    <li class="divider"></li>
-                    <li>
-                        <a href="javascript:void(0);"><i class="fa fa-power-off"></i> Clear</a>
-                    </li>
-                </ul>
-                <!-- end dropdown-menu-->
-
-            </div>
-            <!-- end projects dropdown -->
+            
 
             <!-- #TOGGLE LAYOUT BUTTONS -->
             <!-- pulled right: nav area -->
@@ -126,7 +57,7 @@
 
                 <!-- logout button -->
                 <div id="logout" class="btn-header transparent pull-right">
-                    <span> <a href="login.html" title="Sign Out" data-action="userLogout" data-logout-msg="You can improve your security further after logging out by closing this opened browser"><i class="fa fa-sign-out"></i></a> </span>
+                    <span> <a href="auth/logout" title="Sign Out" data-action="userLogout" data-logout-msg="Tem certeza que deseja realizar logout do sistema?"><i class="fa fa-sign-out"></i></a> </span>
                 </div>
                 <!-- end logout button -->
 
@@ -136,85 +67,14 @@
                 </div>
                 <!-- end search mobile button -->
 
-                <!-- #SEARCH -->
-                <!-- input: search field -->
-                <form action="#ajax/search.html" class="header-search pull-right">
-                    <input id="search-fld" type="text" name="param" placeholder="Find reports and more">
-                    <button type="submit">
-                        <i class="fa fa-search"></i>
-                    </button>
-                    <a href="javascript:void(0);" id="cancel-search-js" title="Cancel Search"><i class="fa fa-times"></i></a>
-                </form>
-                <!-- end input: search field -->
-
+                
                 <!-- fullscreen button -->
                 <div id="fullscreen" class="btn-header transparent pull-right">
                     <span> <a href="javascript:void(0);" data-action="launchFullscreen" title="Full Screen"><i class="fa fa-arrows-alt"></i></a> </span>
                 </div>
                 <!-- end fullscreen button -->
 
-                <!-- #Voice Command: Start Speech -->
-                <!-- NOTE: Voice command button will only show in browsers that support it. Currently it is hidden under mobile browsers. 
-                                   You can take off the "hidden-sm" and "hidden-xs" class to display inside mobile browser-->
-                <div id="speech-btn" class="btn-header transparent pull-right hidden-sm hidden-xs">
-                    <div> 
-                        <a href="javascript:void(0)" title="Voice Command" data-action="voiceCommand"><i class="fa fa-microphone"></i></a> 
-                        <div class="popover bottom"><div class="arrow"></div>
-                            <div class="popover-content">
-                                <h4 class="vc-title">Voice command activated <br><small>Please speak clearly into the mic</small></h4>
-                                <h4 class="vc-title-error text-center">
-                                    <i class="fa fa-microphone-slash"></i> Voice command failed
-                                    <br><small class="txt-color-red">Must <strong>"Allow"</strong> Microphone</small>
-                                    <br><small class="txt-color-red">Must have <strong>Internet Connection</strong></small>
-                                </h4>
-                                <a href="javascript:void(0);" class="btn btn-success" onclick="commands.help()">See Commands</a> 
-                                <a href="javascript:void(0);" class="btn bg-color-purple txt-color-white" onclick="$('#speech-btn .popover').fadeOut(50);">Close Popup</a> 
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- end voice command -->
-
-                <!-- multiple lang dropdown : find all flags in the flags page -->
-                <ul class="header-dropdown-list hidden-xs">
-                    <li>
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"> <img src="img/blank.gif" class="flag flag-us" alt="United States"> <span> US</span> <i class="fa fa-angle-down"></i> </a>
-                        <ul class="dropdown-menu pull-right">
-                            <li class="active">
-                                <a href="javascript:void(0);"><img src="img/blank.gif" class="flag flag-us" alt="United States"> English (US)</a>
-                            </li>
-                            <li>
-                                <a href="javascript:void(0);"><img src="img/blank.gif" class="flag flag-fr" alt="France"> Français</a>
-                            </li>
-                            <li>
-                                <a href="javascript:void(0);"><img src="img/blank.gif" class="flag flag-es" alt="Spanish"> Español</a>
-                            </li>
-                            <li>
-                                <a href="javascript:void(0);"><img src="img/blank.gif" class="flag flag-de" alt="German"> Deutsch</a>
-                            </li>
-                            <li>
-                                <a href="javascript:void(0);"><img src="img/blank.gif" class="flag flag-jp" alt="Japan"> 日本語</a>
-                            </li>
-                            <li>
-                                <a href="javascript:void(0);"><img src="img/blank.gif" class="flag flag-cn" alt="China"> 中文</a>
-                            </li>	
-                            <li>
-                                <a href="javascript:void(0);"><img src="img/blank.gif" class="flag flag-it" alt="Italy"> Italiano</a>
-                            </li>	
-                            <li>
-                                <a href="javascript:void(0);"><img src="img/blank.gif" class="flag flag-pt" alt="Portugal"> Portugal</a>
-                            </li>
-                            <li>
-                                <a href="javascript:void(0);"><img src="img/blank.gif" class="flag flag-ru" alt="Russia"> Русский язык</a>
-                            </li>
-                            <li>
-                                <a href="javascript:void(0);"><img src="img/blank.gif" class="flag flag-kr" alt="Korea"> 한국어</a>
-                            </li>						
-
-                        </ul>
-                    </li>
-                </ul>
-                <!-- end multiple lang -->
+                                
 
             </div>
             <!-- end pulled right: nav area -->
@@ -232,11 +92,10 @@
                 <span> <!-- User image size is adjusted inside CSS, it should stay as is --> 
 
                     <a href="javascript:void(0);" id="show-shortcut" data-action="toggleShortcut">
-                        <img src="img/avatars/sunny.png" alt="me" class="online" /> 
+                        <img src="<?= base_url()?>assets/img/user.jpg" alt="me" class="online" /> 
                         <span>
                             <?=$usuarioLogado->getNome();?>
-                        </span>
-                        <i class="fa fa-angle-down"></i>
+                        </span>                        
                     </a> 
 
                 </span>
@@ -249,51 +108,7 @@
             (the reference to the nav > ul) after page load. Or the navigation
             will not initialize.
             -->
-            <nav>
-                <!-- 
-                NOTE: Notice the gaps after each icon usage <i></i>..
-                Please note that these links work a bit different than
-                traditional href="" links. See documentation for details.
-                -->
-
-                <ul>
-                    <li class="">
-                        <a href="ajax/dashboard.html" title="Dashboard"><i class="fa fa-lg fa-fw fa-home"></i> <span class="menu-item-parent">Dashboard</span></a>
-                    </li>                    
-                    <li>
-                        <a href="#"><i class="fa fa-lg fa-fw fa-building"></i> <span class="menu-item-parent">Administrativo</span></a>
-                        <ul>
-                            <li>
-                                <a href="usuarios"><i class="fa fa-user"></i>Usuários</a>
-                            </li>
-                            <li>
-                                <a href="perfisacesso"><i class="fa fa-key"></i>Perfil de Acesso</a>
-                            </li>                            
-                        </ul>
-                    </li> 
-                    <li>
-                        <a href="#"><i class="fa fa-lg fa-fw fa-book"></i><span class="menu-item-parent">Disciplinas</span></a>
-                        <ul>
-                            <li>
-                                <a href=""><i class="fa fa-book"></i> Fisica</a>
-                            </li>
-                            <li>
-                                <a href=""><i class="fa fa-book"></i> Programação</a>
-                            </li>
-                            <li>
-                                <a href=""><i class="fa fa-book"></i> Teste de Software</a>
-                            </li>                            
-                        </ul>
-                    </li>
-                    <li>
-                        <a href="#"><i class="fa fa-lg fa-fw fa-calendar"></i><span class="menu-item-parent">Atividades</span></a>                        
-                    </li>
-                </ul>
-            </nav>
-
-
-            
-
+            <? require APPPATH . "views/layout/navigation.php"; ?>
 
 
             <span class="minifyme" data-action="minifyMenu"> <i class="fa fa-arrow-circle-left hit"></i> </span>
@@ -345,12 +160,12 @@
         <div class="page-footer">
             <div class="row">
                 <div class="col-xs-12 col-sm-6">
-                    <span class="txt-color-white">SmartAdmin 1.5 <span class="hidden-xs"> - Web Application Framework</span> © 2014-2015</span>
+                    <span class="txt-color-white">Presence 0.5 <span class="hidden-xs"> - LTI Soluções Web</span> © 2014-2015</span>
                 </div>
 
                 <div class="col-xs-6 col-sm-6 text-right hidden-xs">
                     <div class="txt-color-white inline-block">
-                        <i class="txt-color-blueLight hidden-mobile">Last account activity <i class="fa fa-clock-o"></i> <strong>52 mins ago &nbsp;</strong> </i>
+<!--                        <i class="txt-color-blueLight hidden-mobile">Last account activity <i class="fa fa-clock-o"></i> <strong>52 mins ago &nbsp;</strong> </i>
                         <div class="btn-group dropup">
                             <button class="btn btn-xs dropdown-toggle bg-color-blue txt-color-white" data-toggle="dropdown">
                                 <i class="fa fa-link"></i> <span class="caret"></span>
@@ -389,7 +204,7 @@
                                     </div>
                                 </li>
                             </ul>
-                        </div>
+                        </div>-->
                         <!-- end btn-group-->
                     </div>
                     <!-- end div-->
@@ -399,32 +214,7 @@
             <!-- end row -->
         </div>
         <!-- END FOOTER -->
-
-        <!-- #SHORTCUT AREA : With large tiles (activated via clicking user name tag)
-                 Note: These tiles are completely responsive, you can add as many as you like -->
-        <div id="shortcut">
-            <ul>
-                <li>
-                    <a href="#ajax/inbox.html" class="jarvismetro-tile big-cubes bg-color-blue"> <span class="iconbox"> <i class="fa fa-envelope fa-4x"></i> <span>Mail <span class="label pull-right bg-color-darken">14</span></span> </span> </a>
-                </li>
-                <li>
-                    <a href="#ajax/calendar.html" class="jarvismetro-tile big-cubes bg-color-orangeDark"> <span class="iconbox"> <i class="fa fa-calendar fa-4x"></i> <span>Calendar</span> </span> </a>
-                </li>
-                <li>
-                    <a href="#ajax/gmap-xml.html" class="jarvismetro-tile big-cubes bg-color-purple"> <span class="iconbox"> <i class="fa fa-map-marker fa-4x"></i> <span>Maps</span> </span> </a>
-                </li>
-                <li>
-                    <a href="#ajax/invoice.html" class="jarvismetro-tile big-cubes bg-color-blueDark"> <span class="iconbox"> <i class="fa fa-book fa-4x"></i> <span>Invoice <span class="label pull-right bg-color-darken">99</span></span> </span> </a>
-                </li>
-                <li>
-                    <a href="#ajax/gallery.html" class="jarvismetro-tile big-cubes bg-color-greenLight"> <span class="iconbox"> <i class="fa fa-picture-o fa-4x"></i> <span>Gallery </span> </span> </a>
-                </li>
-                <li>
-                    <a href="#ajax/profile.html" class="jarvismetro-tile big-cubes selected bg-color-pinkDark"> <span class="iconbox"> <i class="fa fa-user fa-4x"></i> <span>My Profile </span> </span> </a>
-                </li>
-            </ul>
-        </div>
-        <!-- END SHORTCUT AREA -->
+        
 
         <? require APPPATH . "views/layout/foot.php"; ?>
 

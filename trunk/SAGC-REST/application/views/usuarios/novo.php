@@ -47,7 +47,7 @@
                                         <label class="label">Nascimento</label>
                                         <label class="input">
                                             <i class="icon-prepend fa fa-calendar"></i>
-                                            <input type="text" id="input-dataNascimento" name="dataNascimento" value="<?= isset($_POST["dataNascimento"]) ? $_POST["dataNascimento"] : "" ?>">
+                                            <input type="text" id="dataNasc" name="dataNascimento" value="<?= isset($_POST["dataNascimento"]) ? $_POST["dataNascimento"] : "" ?>">
                                         </label>
                                     </section>
                                     <section class="col col-xs-12 col-md-4 requerido">
@@ -63,14 +63,14 @@
                                         <label class="label">Telefone</label>
                                         <label class="input">
                                             <i class="icon-prepend fa fa-phone"></i>
-                                            <input type="text" name="telefone" data-mask="(99)9999-9999">
+                                            <input type="text" name="telefone" value="<?= isset($_POST["telefone"]) ? $_POST["telefone"] : "" ?>" data-mask="(99)9999-9999" data-mask-placeholder="_">
                                         </label>                                        
                                     </section>
                                     <section class="col col-xs-6 col-md-4">
                                         <label class="label">Celular</label>
                                         <label class="input">
                                             <i class="icon-prepend fa fa-phone"></i>
-                                            <input type="text" name="celular" data-mask="(99)9999-9999">
+                                            <input type="text" name="celular" value="<?= isset($_POST["celular"]) ? $_POST["celular"] : "" ?>" data-mask="(99)9999-9999" data-mask-placeholder="_">
                                         </label>                                        
                                     </section>
                                     <section class="col col-xs-12 col-md-4 requerido">
@@ -207,19 +207,19 @@
 <script type="text/javascript">
 
     pageSetUp();
-    $(document).ready(function () {
 
 
-        $("select[name=estadoId]").change(function () {
-            $.get("<?= site_url("cidades/buscarPorEstadoJson") ?>/" + $(this).val(), function (cidades) {
-                $("select[name=cidadeId]").html("");
-                $("select[name=cidadeId]").append('<option value="" selected>Selecione a cidade</option>');
-                for (var i in cidades) {
-                    $("select[name=cidadeId]").append("<option value=\"" + cidades[i].id + "\">" + cidades[i].nome + "</option>");
-                }
-            }, "json");
-        });
+
+    $("select[name=estadoId]").change(function () {
+        $.get("<?= site_url("cidades/buscarPorEstadoJson") ?>/" + $(this).val(), function (cidades) {
+            $("select[name=cidadeId]").html("");
+            $("select[name=cidadeId]").append('<option value="" selected>Selecione a cidade</option>');
+            for (var i in cidades) {
+                $("select[name=cidadeId]").append("<option value=\"" + cidades[i].id + "\">" + cidades[i].nome + "</option>");
+            }
+        }, "json");
     });
+
     // Load form valisation dependency 
     loadScript("<?= base_url(); ?>assets/js/plugin/jquery-form/jquery-form.min.js", runFormValidation);
     // Registration validation script
@@ -334,13 +334,35 @@
                 perfilAcesso: {
                     required: "Por favor, selecione o perfil de acesso do Usuário"
                 }
-            },            
+            },
+            submitHandler: function (form) {
+                $.post($(form).attr('action'), $(form).serialize(), function (retorno) {
+                    if (!retorno.erro) {
+                        sucessDialogAlert("Usuário Cadastrado", "Informações foram salvas com sucesso.");
+                        location.replace("#usuarios");
+                    } else {
+                        erroDialogAlert("Falha!", "As informações não poderam ser atualizadas devidos há um erro.<br>"+retorno.mensagem);
+                    }
+                }, "json");
+            },
             // Do not change code below
             errorPlacement: function (error, element) {
                 error.insertAfter(element.parent());
             }
         });
     }
+    
+    $('#dataNasc').datepicker({
+            dateFormat: 'dd/mm/yy',
+            changeMonth: true,
+            changeYear: true,
+            minDate: "01/01/1900",
+            prevText: '<i class="fa fa-chevron-left"></i>',
+            nextText: '<i class="fa fa-chevron-right"></i>',
+            onSelect: function (selectedDate) {
+                $('#finishdate').datepicker('option', 'minDate', selectedDate);
+            }
+        });
 
 </script>
 

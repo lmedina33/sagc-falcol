@@ -122,7 +122,8 @@ class Usuarios extends MY_Controller {
             $this->data["mensagem"] = $cadastro["mensagem"];
             if (!$this->data["erro"]) {
                 unset($_POST);
-                redirect('usuarios?sucesso=true&mensagem=' . urlencode($this->data["mensagem"]));
+                //redirect('usuarios?sucesso=true&mensagem=' . urlencode($this->data["mensagem"]));
+                die(json_encode($cadastro));
             }
         }
         $this->data["estados"] = $estadoBLL->buscarTodos();                
