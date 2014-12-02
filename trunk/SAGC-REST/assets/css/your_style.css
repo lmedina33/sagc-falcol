@@ -17,3 +17,18 @@
  * - BODY
  * - CUSTOM STYLES
  */
+
+
+body#login{ background: url(../img/inicio.png) no-repeat !important; background-size: cover !important; }
+
+#login #main{ background: none; margin-left: 0px}
+
+#login .hero { background: none; }
+
+input[type=text],input[type=email],input[type=site],textarea{
+    text-transform: uppercase!important;
+}
+
+.clockpicker-popover {
+    z-index: 999999;
+}
