@@ -49,9 +49,9 @@ $active_group = 'default';
 $active_record = TRUE;
 
 $db['default']['hostname'] = 'localhost';
-$db['default']['username'] = 'ltinet_presence';
-$db['default']['password'] = '1990presence';
-$db['default']['database'] = 'ltinet_presence';
+$db['default']['username'] = 'root';
+$db['default']['password'] = 'lima1807';
+$db['default']['database'] = 'sagc';
 $db['default']['dbdriver'] = 'mysql';
 $db['default']['dbprefix'] = '';
 $db['default']['pconnect'] = TRUE;

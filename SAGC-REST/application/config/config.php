@@ -26,7 +26,7 @@ $config['site_name'] = 'Presence';
 | path to your installation.
 |
 */
-$config['base_url']	= 'http://localhost/presence';
+$config['base_url']	= 'http://ec2-54-148-179-48.us-west-2.compute.amazonaws.com/sagc';
 
 /*
 |--------------------------------------------------------------------------
