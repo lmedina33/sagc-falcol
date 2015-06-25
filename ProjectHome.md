@@ -1,0 +1,1 @@
+Software para ajuda professores a distribuir materiais de alas naos seus alunos.
